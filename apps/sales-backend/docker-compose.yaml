@@ -1,0 +1,13 @@
+services:
+  database:
+    image: 'postgres:13'
+    ports:
+      - '5432:5432'
+    environment:
+      - 'POSTGRES_USER=oscaris'
+      - 'POSTGRES_DB=oscarisdb'
+      - 'POSTGRES_PASSWORD=secret'
+    volumes:
+      - './volumes/oscaris/postgres:/var/lib/postgresql/data'
+
+

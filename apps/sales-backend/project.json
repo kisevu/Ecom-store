@@ -1,0 +1,17 @@
+{
+  "name": "sales-backend",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "sales-backend/src",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nxrocks/nx-spring-boot:run",
+      "options": {
+        "root": "apps/sales-backend",
+        "args": [
+          "-Dspring-boot.run.profiles=local"
+        ]
+      }
+    }
+  }
+}
