@@ -24,6 +24,7 @@ export class App  implements OnInit{
   private platformId = inject(PLATFORM_ID);
 
   constructor(){
+    // checks whether we are on the browser side
     if(isPlatformBrowser(this.platformId)){
       this.oauth2Service.initAuthentication();
     }

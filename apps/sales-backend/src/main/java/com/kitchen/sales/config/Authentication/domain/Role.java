@@ -16,7 +16,7 @@ public enum Role {
   ANONYMOUS,
   UNKNOWN;
 
-  private static final String PREFIX =  "ROLE_";
+  private static final String PREFIX ="ROLE_";
   private static final Map<String, Role> ROLES = buildRoles();
 
   private static Map<String, Role> buildRoles() {

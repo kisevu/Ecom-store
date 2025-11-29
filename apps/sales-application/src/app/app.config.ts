@@ -29,8 +29,8 @@ export const appConfig: ApplicationConfig = {
         secureRoutes: [environment.apiUrl],
         customParamsAuthRequest:{
           audience: environment.kinde.audience
-        }
-      }
+        },
+      },
     }),
     {provide:AbstractSecurityStorage,useClass: SsrStorage},
     provideQueryClient(new QueryClient)

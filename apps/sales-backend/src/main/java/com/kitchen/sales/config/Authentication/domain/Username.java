@@ -20,6 +20,9 @@ public record Username(String username) {
   }
 
   public static Optional<Username> of(String username) {
-    return Optional.ofNullable(username).filter(StringUtils::isNotBlank).map(Username::new);
+    return Optional
+      .ofNullable(username)
+      .filter(StringUtils::isNotBlank)
+      .map(Username::new);
   }
 }

@@ -18,6 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserApplicationService {
 
+  /**
+   * Handles the framework layer
+  * */
+
   private final UserSynchronizer userSynchronizer;
   private final UserReader userReader;
 
@@ -41,7 +45,7 @@ public class UserApplicationService {
 
   @Transactional
   public void updateAddress(UserAddressToUpdate userAddressToUpdate){
-    userSynchronizer.updateUseAddress(userAddressToUpdate);
+    userSynchronizer.updateAddress(userAddressToUpdate);
   }
 
 }

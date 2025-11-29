@@ -61,9 +61,9 @@ public class User {
     this.lastName = user.lastName;
     this.imageUrl = user.imageUrl;
   }
-
   public void initFieldForSignUp(){
-    this.userPublicId = new UserPublicId(UUID.randomUUID());
+    this.userPublicId =
+      new UserPublicId(UUID.randomUUID());
   }
 
   public static User fromTokenAttributes(Map<String,Object> attributes, List<String> rolesFromAccessToken) {

@@ -3,6 +3,7 @@ package com.kitchen.sales.config.Authentication.infrastructure.primary;
 import com.kitchen.sales.config.Authentication.application.AuthenticatedUser;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,14 +20,19 @@ import java.util.stream.Stream;
  */
 @Configuration
 public class KindeJwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
-
+  /**
+   * This class satisfies a custom JWT-to-Authentication converter that merges
+   * standard OAuth2 authorities with kinde-specific roles from the JWT token,creating a unified Authentication
+   * object for spring security
+  * */
   @Override
-  public AbstractAuthenticationToken convert(Jwt source) {
+  public AbstractAuthenticationToken convert(@NonNull Jwt source) {
     return  new JwtAuthenticationToken(source,
       Stream.concat(
         new JwtGrantedAuthoritiesConverter()
           .convert(source)
-          .stream(),extractResourceRoles(source).stream()).collect(Collectors.toSet()));
+          .stream(),extractResourceRoles(source).stream()
+      ).collect(Collectors.toSet()));
   }
 
   private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt){

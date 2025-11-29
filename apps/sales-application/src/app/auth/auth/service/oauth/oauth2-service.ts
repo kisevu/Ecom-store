@@ -15,19 +15,20 @@ export class Oauth2Service {
   oidcSecurityService = inject(OidcSecurityService);
 
   connectedUserQuery: CreateQueryResult<ConnectedUser> | undefined;
+
   notConnected = 'NOT_CONNECTED';
 
   fetch(): CreateQueryResult<ConnectedUser>{
     return injectQuery(()=>({
-      queryKey: ['connected-user'],
-      queryFn: () => firstValueFrom(this.fetchUserHttp(false)),
+      queryKey: ['connected-user'], //used for the cache
+      queryFn: () => firstValueFrom(this.fetchUserHttp(false)), // which part of the code we need to call
     }))
   }
 
 
   fetchUserHttp(forceResync: boolean): Observable<ConnectedUser> {
     const params = new HttpParams().set('forceResync',forceResync);
-    return this.httpClient.get<ConnectedUser>(`${environment.apiUrl}/users/authenticated`)
+    return this.httpClient.get<ConnectedUser>(`${environment.apiUrl}/users/authenticated`,{params});
   }
 
   login():void{
@@ -41,9 +42,10 @@ export class Oauth2Service {
   initAuthentication():void {
     this.oidcSecurityService.checkAuth()
     .subscribe( authInfo => {
+
       if(authInfo.isAuthenticated){
         console.log("Connected...");
-      } else{
+      }  else {
         console.log("Not connected...");
       }
     })

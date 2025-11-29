@@ -1,6 +1,5 @@
 package com.kitchen.sales.order.infrastructure.primary;
 
-import com.kitchen.sales.order.domain.user.aggregate.Authority;
 import com.kitchen.sales.order.domain.user.aggregate.User;
 import org.jilt.Builder;
 
@@ -27,7 +26,6 @@ public record RestUser(
     if(user.getImageUrl() != null) {
       restUserBuilder.imageUrl(user.getImageUrl().value());
     }
-
     return restUserBuilder
       .email(user.getEmail().value())
       .firstName(user.getFirstName().value())

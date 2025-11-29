@@ -3,6 +3,7 @@ package com.kitchen.sales.order.infrastructure.secondary.repository;
 import com.kitchen.sales.order.domain.user.aggregate.User;
 import com.kitchen.sales.order.domain.user.repository.UserRepository;
 import com.kitchen.sales.order.domain.user.vo.UserAddress;
+import com.kitchen.sales.order.domain.user.vo.UserAddressToUpdate;
 import com.kitchen.sales.order.domain.user.vo.UserEmail;
 import com.kitchen.sales.order.domain.user.vo.UserPublicId;
 import com.kitchen.sales.order.infrastructure.secondary.entity.UserEntity;
@@ -49,11 +50,8 @@ public class SpringDataUserRepository implements UserRepository {
   }
 
   @Override
-  public void updateAddress(UserPublicId userPublicId, UserAddress userAddress) {
-    jpaUserRepository.updateAddress(userPublicId.value(),
-      userAddress.street(),
-      userAddress.city(),
-      userAddress.zipcode(),
-      userAddress.country());
+  public void updateAddress(UserPublicId userPublicId, UserAddressToUpdate userAddressToUpdate) {
+    jpaUserRepository.updateAddress(userPublicId.value(),userAddressToUpdate.userAddress().street(),
+      userAddressToUpdate.userAddress().city(),userAddressToUpdate.userAddress().zipcode(), userAddressToUpdate.userAddress().country());
   }
 }

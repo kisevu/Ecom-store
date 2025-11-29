@@ -6,10 +6,12 @@ import { AbstractSecurityStorage } from 'angular-auth-oidc-client';
   providedIn: 'root',
 })
 export class SsrStorage implements AbstractSecurityStorage {
+
     private platformId = inject(PLATFORM_ID);
 
     /*
-    As we know the application will be rendered twice given the two app configs
+    As we know the application will be rendered twice given the two app configs, and main.ts ,
+    main.server.ts
     When  it renders on the front end then we have the isPlatformBrowser
     */
 

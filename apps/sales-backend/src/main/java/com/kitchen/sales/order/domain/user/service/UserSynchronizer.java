@@ -29,6 +29,13 @@ public class UserSynchronizer {
     this.kindeService = kindeService;
   }
 
+  /**
+  *  token comes from kinde after authentication of the user
+   * So on kinde side the user is known but in the application the user is not known, so to have a local copy
+   * in our database we ought to provide a sync between the idp and our app. Also, kinde does not have some of the data i.e the
+   * address, and so we need a copy.
+  * */
+
   public void syncWithIdp(Jwt jwtToken, boolean forceResync){
     Map<String, Object> claims = jwtToken.getClaims();
     List<String> rolesFromToken = AuthenticatedUser.extractRolesFromToken(jwtToken);
@@ -52,10 +59,10 @@ public class UserSynchronizer {
   private void updateUser(User user, User existingUser) {
     existingUser.updateFromUser(user);
     userRepository.save(existingUser);
-  }
+}
 
-  public void updateUseAddress(UserAddressToUpdate userAddressToUpdate){
-    userRepository.updateAddress(userAddressToUpdate.userPublicId(),userAddressToUpdate.userAddress());
+  public void updateAddress(UserAddressToUpdate userAddressToUpdate){
+    userRepository.updateAddress(userAddressToUpdate.userPublicId(),userAddressToUpdate);
   }
 
 }

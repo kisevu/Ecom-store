@@ -13,7 +13,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
@@ -112,7 +111,6 @@ public final class AuthenticatedUser {
     if (token instanceof JwtAuthenticationToken jwtAuthenticationToken) {
       return jwtAuthenticationToken.getTokenAttributes();
     }
-
     throw new UnknownAuthenticationException();
   }
 
