@@ -23,17 +23,31 @@ public class SpringDataUserRepository implements UserRepository {
     this.jpaUserRepository = jpaUserRepository;
   }
 
+//  @Override
+//  public void save(User user) {
+//    if (user.getDbId()!=null){
+//      Optional<UserEntity> userToUpdateOpt = jpaUserRepository.findById(user.getDbId());
+//      if (userToUpdateOpt.isPresent()){
+//        UserEntity userToUpdate = userToUpdateOpt.get();
+//        userToUpdate.updateFromUser(user);
+//        jpaUserRepository.saveAndFlush(userToUpdate);
+//      } else {
+//        jpaUserRepository.save(UserEntity.from(user));
+//      }
+//    }
+//  }
+
   @Override
   public void save(User user) {
-    if (user.getDbId()!=null){
+    if (user.getDbId() != null) {
       Optional<UserEntity> userToUpdateOpt = jpaUserRepository.findById(user.getDbId());
-      if (userToUpdateOpt.isPresent()){
+      if (userToUpdateOpt.isPresent()) {
         UserEntity userToUpdate = userToUpdateOpt.get();
         userToUpdate.updateFromUser(user);
         jpaUserRepository.saveAndFlush(userToUpdate);
-      } else {
-        jpaUserRepository.save(UserEntity.from(user));
       }
+    } else {  // ← ADD THIS ELSE BLOCK FOR NEW USERS
+      jpaUserRepository.save(UserEntity.from(user));
     }
   }
 

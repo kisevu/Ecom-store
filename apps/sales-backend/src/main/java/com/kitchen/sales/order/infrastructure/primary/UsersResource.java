@@ -29,13 +29,12 @@ public class UsersResource {
   //@AuthenticationPrincipal tells spring security to inject jwt token present the Http request to  provide to use when the endpoint is called
   @GetMapping("/authenticated")
   public ResponseEntity<RestUser> getAuthenticatedUser(@AuthenticationPrincipal Jwt jwtToken,
-                                                       @RequestParam boolean forceSync){
-    User authenticatedUser = userApplicationService.getAuthenticatedUserWithSync(jwtToken, forceSync);
-    RestUser restUser = RestUser.from(authenticatedUser);
+                                                       @RequestParam boolean forceResync){
+    User authenticatedUser = userApplicationService.getAuthenticatedUserWithSync(jwtToken, forceResync);
     log.info("jwt token passed is: {}", jwtToken);
-    log.info("authenticated user is :{}", authenticatedUser);
+    log.info("authenticated user is :{}", authenticatedUser.getDbId());
+    RestUser restUser = RestUser.from(authenticatedUser);
     return ResponseEntity.ok(restUser);
   }
-
 
 }

@@ -12,6 +12,7 @@ import { environment } from '../../../../../environments/environment';
 export class Oauth2Service {
 
   httpClient = inject(HttpClient);
+
   oidcSecurityService = inject(OidcSecurityService);
 
   connectedUserQuery: CreateQueryResult<ConnectedUser> | undefined;
@@ -20,9 +21,9 @@ export class Oauth2Service {
 
   fetch(): CreateQueryResult<ConnectedUser>{
     return injectQuery(()=>({
-      queryKey: ['connected-user'], //used for the cache
-      queryFn: () => firstValueFrom(this.fetchUserHttp(false)), // which part of the code we need to call
-    }))
+      queryKey: ['connected-user'],
+      queryFn: () => firstValueFrom(this.fetchUserHttp(false)),
+    }));
   }
 
 
@@ -30,6 +31,13 @@ export class Oauth2Service {
     const params = new HttpParams().set('forceResync',forceResync);
     return this.httpClient.get<ConnectedUser>(`${environment.apiUrl}/users/authenticated`,{params});
   }
+
+  // fetchUserHttp(forceResync:boolean):Observable<ConnectedUser>{
+  //   const params = new HttpParams().set('forceResync',forceResync);
+  //   const token = this.oidcSecurityService.getAccessToken();
+  //   const headers ={ Authorization: `Bearer ${token}`};
+  //   return this.httpClient.get<ConnectedUser>(`${environment.apiUrl}/users/authenticated`,{params,headers});
+  // }
 
   login():void{
     this.oidcSecurityService.authorize();

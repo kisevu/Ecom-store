@@ -48,6 +48,9 @@ public class User {
     this.lastSeen = lastSeen;
   }
 
+  public User() {
+  }
+
   public void assertMandatoryFields(){
     Assert.notNull("firstName",firstName);
     Assert.notNull("lastName",lastName);

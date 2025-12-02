@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -44,7 +43,7 @@ public class KindeService {
   private Optional<String> getToken(){
    try{
      ResponseEntity<KindeAccessToken> accessToken = restClient.post()
-       .uri(URI.create("/oauth/token"))
+       .uri(apiUrl+"/oauth/token")
        .body("grant_type=client_credentials&audience=" + URLEncoder.encode(audience, StandardCharsets.UTF_8))
        .accept(MediaType.APPLICATION_JSON)
        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -62,12 +61,13 @@ public class KindeService {
 
   }
 
+  /**
+   * typeRef used to house
+   * <i> ParameterizedTypeReference<Map<String,Object>> object <i/>
+   * */
   public  Map<String,Object> getUserInfo( String userId){
+    log.info("Passed user id: {}", userId);
     String token = this.getToken().orElseThrow(()-> new IllegalStateException("No token was found"));
-    /*
-     * typeRef used to house
-     * <i> ParameterizedTypeReference<Map<String,Object>> object <i/>
-    * */
     var typeRef = new ParameterizedTypeReference<Map<String,Object>>(){};
     ResponseEntity<Map<String, Object>> authorization = restClient.get()
       .uri(apiUrl + "/api/v1/user?id={id}", userId)
