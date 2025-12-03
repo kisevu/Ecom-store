@@ -33,6 +33,7 @@ export class App  implements OnInit{
 
   ngOnInit(): void {
     this.initFontAwesome();
+    
   }
 
   private initFontAwesome(){

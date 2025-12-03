@@ -23,7 +23,8 @@ public class SecurityConfig {
         auth.requestMatchers("/api/**").authenticated())
       .csrf(AbstractHttpConfigurer::disable)
       .oauth2ResourceServer(oauth2 ->
-        oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(new KindeJwtAuthenticationConverter())));
+        oauth2.jwt(jwt ->
+          jwt.jwtAuthenticationConverter(new KindeJwtAuthenticationConverter())));
       return httpSecurity.build();
   }
 }
