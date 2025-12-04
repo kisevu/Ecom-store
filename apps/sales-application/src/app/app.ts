@@ -1,14 +1,15 @@
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FaConfig, FaIconLibrary} from '@fortawesome/angular-fontawesome';
+import { FaConfig, FaIconLibrary, FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { fontAwesomeIcons } from './shared/font-awesome-icons';
 import { Navbar } from "./layout/navbar/navbar";
 import { Footer } from "./layout/footer/footer";
 import { Oauth2Service } from './auth/auth/service/oauth/oauth2-service';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
+import { ToastService } from './shared/toast/service/toast-service';
 
 @Component({
-  imports: [RouterModule, Navbar, Footer],
+  imports: [RouterModule, Navbar, Footer, NgClass, FaIconComponent],
   selector: 'ecom-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -22,6 +23,7 @@ export class App  implements OnInit{
   private oauth2Service = inject(Oauth2Service);
 
   private platformId = inject(PLATFORM_ID);
+  toastService = inject(ToastService);
 
   constructor(){
     // checks whether we are on the browser side
@@ -33,7 +35,7 @@ export class App  implements OnInit{
 
   ngOnInit(): void {
     this.initFontAwesome();
-    
+    this.toastService.show("hello toast",'ERROR');
   }
 
   private initFontAwesome(){
