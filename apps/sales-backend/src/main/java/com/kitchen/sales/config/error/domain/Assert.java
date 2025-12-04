@@ -45,7 +45,7 @@ public final class Assert {
   }
 
   /**
-   * Ensure that the value is not blank (null, empty or only whitespace)
+   * Ensure that the publicId is not blank (null, empty or only whitespace)
    *
    * @param field
    *          name of the field to check (will be displayed in exception message)
@@ -109,7 +109,7 @@ public final class Assert {
    *          name of the field to check (will be displayed in exception message)
    * @param input
    *          string to check
-   * @return A {@link StringAsserter} for this field and value
+   * @return A {@link StringAsserter} for this field and publicId
    */
   public static StringAsserter field(String field, String input) {
     return new StringAsserter(field, input);
@@ -133,8 +133,8 @@ public final class Assert {
    * @param field
    *          name of the field to check (will be displayed in exception message)
    * @param input
-   *          value to check
-   * @return An {@link IntegerAsserter} for this field and value
+   *          publicId to check
+   * @return An {@link IntegerAsserter} for this field and publicId
    */
   public static IntegerAsserter field(String field, Integer input) {
     return new IntegerAsserter(field, input);
@@ -158,8 +158,8 @@ public final class Assert {
    * @param field
    *          name of the field to check (will be displayed in exception message)
    * @param input
-   *          value to check
-   * @return An {@link LongAsserter} for this field and value
+   *          publicId to check
+   * @return An {@link LongAsserter} for this field and publicId
    */
   public static LongAsserter field(String field, Long input) {
     return new LongAsserter(field, input);
@@ -183,8 +183,8 @@ public final class Assert {
    * @param field
    *          name of the field to check (will be displayed in exception message)
    * @param input
-   *          value to check
-   * @return An {@link DoubleAsserter} for this field and value
+   *          publicId to check
+   * @return An {@link DoubleAsserter} for this field and publicId
    */
   public static FloatAsserter field(String field, Float input) {
     return new FloatAsserter(field, input);
@@ -208,8 +208,8 @@ public final class Assert {
    * @param field
    *          name of the field to check (will be displayed in exception message)
    * @param input
-   *          value to check
-   * @return An {@link DoubleAsserter} for this field and value
+   *          publicId to check
+   * @return An {@link DoubleAsserter} for this field and publicId
    */
   public static DoubleAsserter field(String field, Double input) {
     return new DoubleAsserter(field, input);
@@ -233,8 +233,8 @@ public final class Assert {
    * @param field
    *          name of the field to check (will be displayed in exception message)
    * @param input
-   *          value to check
-   * @return An {@link BigDecimalAsserter} for this field and value
+   *          publicId to check
+   * @return An {@link BigDecimalAsserter} for this field and publicId
    */
   public static BigDecimalAsserter field(String field, BigDecimal input) {
     return new BigDecimalAsserter(field, input);
@@ -259,7 +259,7 @@ public final class Assert {
    *          name of the field to check (will be displayed in exception message)
    * @param input
    *          collection to check
-   * @return A {@link CollectionAsserter} for this field and value
+   * @return A {@link CollectionAsserter} for this field and publicId
    */
   public static <T> CollectionAsserter<T> field(String field, Collection<T> input) {
     return new CollectionAsserter<>(field, input);
@@ -284,7 +284,7 @@ public final class Assert {
    *          name of the field to check (will be displayed in exception message)
    * @param input
    *          array to check
-   * @return A {@link ArrayAsserter} for this field and value
+   * @return A {@link ArrayAsserter} for this field and publicId
    */
   public static <T> ArrayAsserter<T> field(String field, T[] input) {
     return new ArrayAsserter<>(field, input);
@@ -308,8 +308,8 @@ public final class Assert {
    * @param field
    *          name of the field to check (will be displayed in exception message)
    * @param input
-   *          value to check
-   * @return An {@link InstantAsserter} for this field and value
+   *          publicId to check
+   * @return An {@link InstantAsserter} for this field and publicId
    */
   public static InstantAsserter field(String field, Instant input) {
     return new InstantAsserter(field, input);
@@ -329,11 +329,11 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the value is not null
+     * Ensure that the publicId is not null
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the value is null
+     *           if the publicId is null
      */
     public StringAsserter notNull() {
       Assert.notNull(field, value);
@@ -342,11 +342,11 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the value is not blank (null, empty or only whitespace)
+     * Ensure that the publicId is not blank (null, empty or only whitespace)
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the value is blank
+     *           if the publicId is blank
      */
     public StringAsserter notBlank() {
       notNull();
@@ -359,16 +359,16 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is at least of the given length
+     * Ensure that the input publicId is at least of the given length
      *
      * @param length
      *          inclusive min length of the {@link String}
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the expected length is strictly positive and the value is null
+     *           if the expected length is strictly positive and the publicId is null
      * @throws StringTooShortException
-     *           if the value is shorter than min length
+     *           if the publicId is shorter than min length
      */
     public StringAsserter minLength(int length) {
       if (length <= 0 && value == null) {
@@ -385,13 +385,13 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the given input value is not over the given length
+     * Ensure that the given input publicId is not over the given length
      *
      * @param length
      *          inclusive max length of the {@link String}
      * @return The current asserter
      * @throws StringTooLongException
-     *           if the value is longer than the max length
+     *           if the publicId is longer than the max length
      */
     public StringAsserter maxLength(int length) {
       if (value == null) {
@@ -420,28 +420,28 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is positive (0 is positive)
+     * Ensure that the input publicId is positive (0 is positive)
      *
      * @return The current asserters
      * @throws MissingMandatoryValueException
-     *           if the value is null
+     *           if the publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is negative
+     *           if the publicId is negative
      */
     public IntegerAsserter positive() {
       return min(0);
     }
 
     /**
-     * Ensure that the input value is over the given value
+     * Ensure that the input publicId is over the given publicId
      *
      * @param minValue
-     *          inclusive min value
+     *          inclusive min publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is under min
+     *           if the publicId is under min
      */
     public IntegerAsserter min(int minValue) {
       notNull(field, value);
@@ -454,15 +454,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is under the given value
+     * Ensure that the input publicId is under the given publicId
      *
      * @param maxValue
-     *          inclusive max value
+     *          inclusive max publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooHighException
-     *           if the value is over max
+     *           if the publicId is over max
      */
     public IntegerAsserter max(int maxValue) {
       notNull(field, value);
@@ -489,28 +489,28 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is positive (0 is positive)
+     * Ensure that the input publicId is positive (0 is positive)
      *
      * @return The current asserters
      * @throws MissingMandatoryValueException
-     *           if the value is null
+     *           if the publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is negative
+     *           if the publicId is negative
      */
     public LongAsserter positive() {
       return min(0);
     }
 
     /**
-     * Ensure that the input value is over the given value
+     * Ensure that the input publicId is over the given publicId
      *
      * @param minValue
-     *          inclusive min value
+     *          inclusive min publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is under min
+     *           if the publicId is under min
      */
     public LongAsserter min(long minValue) {
       notNull(field, value);
@@ -523,15 +523,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is under the given value
+     * Ensure that the input publicId is under the given publicId
      *
      * @param maxValue
-     *          inclusive max value
+     *          inclusive max publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooHighException
-     *           if the value is over max
+     *           if the publicId is over max
      */
     public LongAsserter max(long maxValue) {
       notNull(field, value);
@@ -558,41 +558,41 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is positive (0 is positive)
+     * Ensure that the input publicId is positive (0 is positive)
      *
      * @return The current asserters
      * @throws MissingMandatoryValueException
-     *           if the value is null
+     *           if the publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is negative
+     *           if the publicId is negative
      */
     public FloatAsserter positive() {
       return min(0);
     }
 
     /**
-     * Ensure that the input value is strictly positive (0 is not strictly positive)
+     * Ensure that the input publicId is strictly positive (0 is not strictly positive)
      *
      * @return The current asserters
      * @throws MissingMandatoryValueException
-     *           if the value is null
+     *           if the publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is negative
+     *           if the publicId is negative
      */
     public FloatAsserter strictlyPositive() {
       return over(0);
     }
 
     /**
-     * Ensure that the input value is over the given value
+     * Ensure that the input publicId is over the given publicId
      *
      * @param minValue
-     *          inclusive min value
+     *          inclusive min publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is under min
+     *           if the publicId is under min
      */
     public FloatAsserter min(float minValue) {
       notNull(field, value);
@@ -605,15 +605,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is over the given floor
+     * Ensure that the input publicId is over the given floor
      *
      * @param floor
-     *          exclusive floor value
+     *          exclusive floor publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooHighException
-     *           if the value is under floor
+     *           if the publicId is under floor
      */
     public FloatAsserter over(float floor) {
       notNull(field, value);
@@ -630,15 +630,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is under the given value
+     * Ensure that the input publicId is under the given publicId
      *
      * @param maxValue
-     *          inclusive max value
+     *          inclusive max publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooHighException
-     *           if the value is over max
+     *           if the publicId is over max
      */
     public FloatAsserter max(float maxValue) {
       notNull(field, value);
@@ -651,15 +651,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is under the given ceil
+     * Ensure that the input publicId is under the given ceil
      *
      * @param ceil
-     *          exclusive ceil value
+     *          exclusive ceil publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooHighException
-     *           if the value is over ceil
+     *           if the publicId is over ceil
      */
     public FloatAsserter under(float ceil) {
       notNull(field, value);
@@ -690,41 +690,41 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is positive (0 is positive)
+     * Ensure that the input publicId is positive (0 is positive)
      *
      * @return The current asserters
      * @throws MissingMandatoryValueException
-     *           if the value is null
+     *           if the publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is negative
+     *           if the publicId is negative
      */
     public DoubleAsserter positive() {
       return min(0);
     }
 
     /**
-     * Ensure that the input value is strictly positive (0 is not strictly positive)
+     * Ensure that the input publicId is strictly positive (0 is not strictly positive)
      *
      * @return The current asserters
      * @throws MissingMandatoryValueException
-     *           if the value is null
+     *           if the publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is negative
+     *           if the publicId is negative
      */
     public DoubleAsserter strictlyPositive() {
       return over(0);
     }
 
     /**
-     * Ensure that the input value is over the given value
+     * Ensure that the input publicId is over the given publicId
      *
      * @param minValue
-     *          inclusive min value
+     *          inclusive min publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is under min
+     *           if the publicId is under min
      */
     public DoubleAsserter min(double minValue) {
       notNull(field, value);
@@ -737,15 +737,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is over the given floor
+     * Ensure that the input publicId is over the given floor
      *
      * @param floor
-     *          exclusive floor value
+     *          exclusive floor publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooHighException
-     *           if the value is under floor
+     *           if the publicId is under floor
      */
     public DoubleAsserter over(double floor) {
       notNull(field, value);
@@ -762,15 +762,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is under the given value
+     * Ensure that the input publicId is under the given publicId
      *
      * @param maxValue
-     *          inclusive max value
+     *          inclusive max publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooHighException
-     *           if the value is over max
+     *           if the publicId is over max
      */
     public DoubleAsserter max(double maxValue) {
       notNull(field, value);
@@ -783,15 +783,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is under the given ceil
+     * Ensure that the input publicId is under the given ceil
      *
      * @param ceil
-     *          exclusive ceil value
+     *          exclusive ceil publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooHighException
-     *           if the value is over ceil
+     *           if the publicId is over ceil
      */
     public DoubleAsserter under(double ceil) {
       notNull(field, value);
@@ -822,56 +822,56 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is positive (0 is positive)
+     * Ensure that the input publicId is positive (0 is positive)
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the input value is null
+     *           if the input publicId is null
      * @throws NumberValueTooLowException
-     *           if the input value is negative
+     *           if the input publicId is negative
      */
     public BigDecimalAsserter positive() {
       return min(0);
     }
 
     /**
-     * Ensure that the input value is strictly positive (0 is not strictly positive)
+     * Ensure that the input publicId is strictly positive (0 is not strictly positive)
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the input value is null
+     *           if the input publicId is null
      * @throws NumberValueTooLowException
-     *           if the input value is negative
+     *           if the input publicId is negative
      */
     public BigDecimalAsserter strictlyPositive() {
       return over(0);
     }
 
     /**
-     * Ensure that the input value is at least at min value
+     * Ensure that the input publicId is at least at min publicId
      *
      * @param minValue
-     *          inclusive min value
+     *          inclusive min publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the input value is null
+     *           if the input publicId is null
      * @throws NumberValueTooLowException
-     *           if the input value is under the min value
+     *           if the input publicId is under the min publicId
      */
     public BigDecimalAsserter min(long minValue) {
       return min(new BigDecimal(minValue));
     }
 
     /**
-     * Ensure that the input value is at least at min value
+     * Ensure that the input publicId is at least at min publicId
      *
      * @param minValue
-     *          inclusive min value
+     *          inclusive min publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the input or min value is null
+     *           if the input or min publicId is null
      * @throws NumberValueTooLowException
-     *           if the input value is under the min value
+     *           if the input publicId is under the min publicId
      */
     public BigDecimalAsserter min(BigDecimal minValue) {
       notNull();
@@ -885,30 +885,30 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is over the given floor
+     * Ensure that the input publicId is over the given floor
      *
      * @param floor
-     *          exclusive floor value
+     *          exclusive floor publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooLowException
-     *           if the value is under floor
+     *           if the publicId is under floor
      */
     public BigDecimalAsserter over(long floor) {
       return over(new BigDecimal(floor));
     }
 
     /**
-     * Ensure that the input value is over the given floor
+     * Ensure that the input publicId is over the given floor
      *
      * @param floor
-     *          exclusive floor value
+     *          exclusive floor publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value or floor is null
+     *           if publicId or floor is null
      * @throws NumberValueTooLowException
-     *           if the value is under floor
+     *           if the publicId is under floor
      */
     public BigDecimalAsserter over(BigDecimal floor) {
       notNull();
@@ -926,30 +926,30 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is at most at max value
+     * Ensure that the input publicId is at most at max publicId
      *
      * @param maxValue
-     *          inclusive max value
+     *          inclusive max publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the input value is null
+     *           if the input publicId is null
      * @throws NumberValueTooHighException
-     *           if the input value is over max
+     *           if the input publicId is over max
      */
     public BigDecimalAsserter max(long maxValue) {
       return max(new BigDecimal(maxValue));
     }
 
     /**
-     * Ensure that the input value is at most at max value
+     * Ensure that the input publicId is at most at max publicId
      *
      * @param maxValue
-     *          inclusive max value
+     *          inclusive max publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the input or max value is null
+     *           if the input or max publicId is null
      * @throws NumberValueTooHighException
-     *           if the input value is over max
+     *           if the input publicId is over max
      */
     public BigDecimalAsserter max(BigDecimal maxValue) {
       notNull();
@@ -963,30 +963,30 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is under the given ceil
+     * Ensure that the input publicId is under the given ceil
      *
      * @param ceil
-     *          exclusive ceil value
+     *          exclusive ceil publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value is null
+     *           if publicId is null
      * @throws NumberValueTooHighException
-     *           if the value is under floor
+     *           if the publicId is under floor
      */
     public BigDecimalAsserter under(long ceil) {
       return under(new BigDecimal(ceil));
     }
 
     /**
-     * Ensure that the input value is under the given ceil
+     * Ensure that the input publicId is under the given ceil
      *
      * @param ceil
-     *          exclusive ceil value
+     *          exclusive ceil publicId
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if value or ceil is null
+     *           if publicId or ceil is null
      * @throws NumberValueTooHighException
-     *           if the value is under floor
+     *           if the publicId is under floor
      */
     public BigDecimalAsserter under(BigDecimal ceil) {
       notNull();
@@ -1004,11 +1004,11 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the input value is not null
+     * Ensure that the input publicId is not null
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the input value is null
+     *           if the input publicId is null
      */
     public BigDecimalAsserter notNull() {
       Assert.notNull(field, value);
@@ -1031,11 +1031,11 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the value is not null
+     * Ensure that the publicId is not null
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the value is null
+     *           if the publicId is null
      */
     public CollectionAsserter<T> notNull() {
       Assert.notNull(field, value);
@@ -1044,11 +1044,11 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the value is not empty (null or empty)
+     * Ensure that the publicId is not empty (null or empty)
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the value is null or empty
+     *           if the publicId is null or empty
      */
     public CollectionAsserter<T> notEmpty() {
       notNull();
@@ -1061,15 +1061,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the size of the given input value is not over the given size
+     * Ensure that the size of the given input publicId is not over the given size
      *
      * @param maxSize
      *          inclusive max size of the {@link Collection}
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the expected size is strictly positive and the value is null
+     *           if the expected size is strictly positive and the publicId is null
      * @throws TooManyElementsException
-     *           if the size of value is over the max size
+     *           if the size of publicId is over the max size
      */
     public CollectionAsserter<T> maxSize(int maxSize) {
       if (maxSize <= 0 && value == null) {
@@ -1119,11 +1119,11 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the value is not null
+     * Ensure that the publicId is not null
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the value is null
+     *           if the publicId is null
      */
     public ArrayAsserter<T> notNull() {
       Assert.notNull(field, value);
@@ -1132,11 +1132,11 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the value is not empty (null or empty)
+     * Ensure that the publicId is not empty (null or empty)
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the value is null or empty
+     *           if the publicId is null or empty
      */
     public ArrayAsserter<T> notEmpty() {
       notNull();
@@ -1149,15 +1149,15 @@ public final class Assert {
     }
 
     /**
-     * Ensure that the size of the given input value is not over the given size
+     * Ensure that the size of the given input publicId is not over the given size
      *
      * @param maxSize
      *          inclusive max size of the array
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the expected size is strictly positive and the value is null
+     *           if the expected size is strictly positive and the publicId is null
      * @throws TooManyElementsException
-     *           if the size of value is over the max size
+     *           if the size of publicId is over the max size
      */
     public ArrayAsserter<T> maxSize(int maxSize) {
       if (maxSize <= 0 && value == null) {
@@ -1194,7 +1194,7 @@ public final class Assert {
   }
 
   /**
-   * Asserter dedicated to instant value
+   * Asserter dedicated to instant publicId
    */
   public static final class InstantAsserter {
 
@@ -1213,7 +1213,7 @@ public final class Assert {
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the input value is null
+     *           if the input publicId is null
      * @throws NotAfterTimeException
      *           if the input instant is in past
      */
@@ -1270,7 +1270,7 @@ public final class Assert {
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
-     *           if the input value is null
+     *           if the input publicId is null
      * @throws NotBeforeTimeException
      *           if the input instant is in future
      */

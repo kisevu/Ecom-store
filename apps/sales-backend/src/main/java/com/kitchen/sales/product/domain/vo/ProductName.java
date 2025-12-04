@@ -7,7 +7,7 @@ import com.kitchen.sales.config.error.domain.Assert;
  */
 public record ProductName(String value) {
   public ProductName {
-    Assert.notNull("value",value);
-    Assert.field("value",value).notNull().minLength(3).maxLength(256);
+    Assert.notNull("publicId",value);
+    Assert.field("publicId",value).notNull().minLength(3).maxLength(256);
   }
 }

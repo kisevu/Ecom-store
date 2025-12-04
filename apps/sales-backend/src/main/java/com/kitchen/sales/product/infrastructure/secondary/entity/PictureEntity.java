@@ -28,6 +28,7 @@ public class PictureEntity extends AbstractAuditingEntity<Long> {
   private Long id;
 
   @Column(name = "file",nullable = false)
+  @Lob
   private byte []  file;
 
   @Column(name = "file_content_type",nullable = false)

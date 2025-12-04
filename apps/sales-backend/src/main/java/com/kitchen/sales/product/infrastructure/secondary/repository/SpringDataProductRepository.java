@@ -61,6 +61,6 @@ public class SpringDataProductRepository implements ProductRepository {
 
   @Override
   public int delete(PublicId publicId) {
-    return productRepository.deletePublicId(publicId.value());
+    return productRepository.deleteByPublicId(publicId.value());
   }
 }

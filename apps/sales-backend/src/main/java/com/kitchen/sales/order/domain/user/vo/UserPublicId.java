@@ -10,6 +10,6 @@ import java.util.UUID;
 public record UserPublicId(UUID value) {
 
   public UserPublicId {
-    Assert.notNull("value",value);
+    Assert.notNull("publicId",value);
   }
 }

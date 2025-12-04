@@ -7,6 +7,6 @@ import com.kitchen.sales.config.error.domain.Assert;
  */
 public record ProductBrand(String value) {
   public ProductBrand{
-    Assert.field("value",value).notNull().minLength(3);
+    Assert.field("publicId",value).notNull().minLength(3);
   }
 }
