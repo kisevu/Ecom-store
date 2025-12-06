@@ -35,4 +35,5 @@ export const appConfig: ApplicationConfig = {
     {provide:AbstractSecurityStorage,useClass: SsrStorage},
     provideQueryClient(new QueryClient)
   ],
+
 };

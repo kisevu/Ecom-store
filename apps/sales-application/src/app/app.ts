@@ -35,7 +35,7 @@ export class App  implements OnInit{
 
   ngOnInit(): void {
     this.initFontAwesome();
-    this.toastService.show("hello toast",'ERROR');
+    this.toastService.show("hello toast",'SUCCESS');
   }
 
   private initFontAwesome(){

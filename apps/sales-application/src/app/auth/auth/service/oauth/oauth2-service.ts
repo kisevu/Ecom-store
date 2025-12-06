@@ -27,17 +27,17 @@ export class Oauth2Service {
   }
 
 
-  fetchUserHttp(forceResync: boolean): Observable<ConnectedUser> {
-    const params = new HttpParams().set('forceResync',forceResync);
-    return this.httpClient.get<ConnectedUser>(`${environment.apiUrl}/users/authenticated`,{params});
-  }
-
-  // fetchUserHttp(forceResync:boolean):Observable<ConnectedUser>{
+  // fetchUserHttp(forceResync: boolean): Observable<ConnectedUser> {
   //   const params = new HttpParams().set('forceResync',forceResync);
-  //   const token = this.oidcSecurityService.getAccessToken();
-  //   const headers ={ Authorization: `Bearer ${token}`};
-  //   return this.httpClient.get<ConnectedUser>(`${environment.apiUrl}/users/authenticated`,{params,headers});
+  //   return this.httpClient.get<ConnectedUser>(`${environment.apiUrl}/users/authenticated`,{params});
   // }
+
+  fetchUserHttp(forceResync:boolean):Observable<ConnectedUser>{
+    const params = new HttpParams().set('forceResync',forceResync);
+    const token = this.oidcSecurityService.getAccessToken();
+    const headers ={ Authorization: `Bearer ${token}`};
+    return this.httpClient.get<ConnectedUser>(`${environment.apiUrl}/users/authenticated`,{params,headers});
+  }
 
   login():void{
     this.oidcSecurityService.authorize();

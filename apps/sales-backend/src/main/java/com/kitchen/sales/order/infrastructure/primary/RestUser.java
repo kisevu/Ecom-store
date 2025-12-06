@@ -3,8 +3,7 @@ package com.kitchen.sales.order.infrastructure.primary;
 import com.kitchen.sales.order.domain.user.aggregate.User;
 import org.jilt.Builder;
 
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Author: kev.Ameda
@@ -34,5 +33,10 @@ public record RestUser(
       .authorities(RestAuthority.fromSet(user.getAuthorities()))
       .build();
   }
+
+  public static RestUser anonymous(){
+    return new RestUser(UUID.randomUUID(),"dummy","dummy","dummy@gmail.com","image",Set.of());
+  }
+
 
 }
