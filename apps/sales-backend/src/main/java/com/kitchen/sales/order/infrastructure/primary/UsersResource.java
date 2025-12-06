@@ -37,24 +37,5 @@ public class UsersResource {
     return ResponseEntity.ok(restUser);
   }
 
-//  @GetMapping("/authenticated")
-//  public ResponseEntity<RestUser> getAuthenticatedUser(
-//    @AuthenticationPrincipal Jwt jwtToken,
-//    @RequestParam(defaultValue = "false") boolean forceResync) {  // Add defaultValue
-//
-//    if (jwtToken == null) {
-//      log.warn("Anonymous access to /api/users/authenticated - returning empty user");
-//      return ResponseEntity.ok(RestUser.anonymous());
-//    }
-//
-//    try {
-//      User authenticatedUser = userApplicationService.getAuthenticatedUserWithSync(jwtToken, forceResync);
-//      log.info("Authenticated user: {}", authenticatedUser.getDbId());
-//      return ResponseEntity.ok(RestUser.from(authenticatedUser));
-//    } catch (Exception e) {
-//      log.error("User sync failed for subject: {}", jwtToken.getSubject(), e);
-//      return ResponseEntity.ok(RestUser.anonymous());
-//    }
-//  }
 
 }

@@ -37,4 +37,8 @@ export class Navbar {
     }
   }
 
+  closeMenu(menu: HTMLDetailsElement){
+    menu.removeAttribute('open');
+  }
+
 }

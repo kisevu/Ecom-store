@@ -20,15 +20,23 @@
           </ul>
         </details>
        </li>
-
+       @if (connectedUserQuery?.status() === "success" && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!,"ROLE_ADMIN")) {
        <li>
         <details #adminMenu>
           <summary>Admin</summary>
           <ul class="z-30">
-            <li><a href="/admin">Admin</a></li>
+            <li>
+              <a routerLink="admin/categories/list" (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Categories</a>
+            </li>
+            <li>
+              <a routerLink="admin/products/list" (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Products</a>
+            </li>
           </ul>
         </details>
        </li>
+
+      }
+
        <li>
         <details #practice>
           <summary>Practice</summary>
