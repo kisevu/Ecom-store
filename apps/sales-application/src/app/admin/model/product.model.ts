@@ -45,5 +45,5 @@ export type CreateProductFormContent = {
   color: FormControl<string>;
   featured: FormControl<boolean>;
   pictures:FormControl<ProductPicture[]>;
-  nbInStock: FormControl<number>;
+  stock: FormControl<number>;
 }

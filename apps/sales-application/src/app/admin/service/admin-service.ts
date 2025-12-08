@@ -27,7 +27,6 @@ export class AdminService {
 
   createProduct(product:BaseProduct):Observable<Product>{
     const formData = new FormData();
-
     for( let i = 0; i < product.pictures.length; ++i){
       formData.append('picture-'+i,product.pictures[i].file);
     }

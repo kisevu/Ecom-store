@@ -45,6 +45,7 @@ public class ProductAdminResource {
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<RestProduct> save( MultipartHttpServletRequest request ,
                                            @RequestPart("dto") String productRaw) throws JsonProcessingException {
+    log.info("JSON: {}",productRaw);
     List<RestPicture> pictures = request.getFileMap()
       .values()
       .stream()

@@ -99,6 +99,7 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
       .category(CategoryEntity.from(product.getCategory()))
       .pictures(PictureEntity.from(product.getPictures()))
       .featured(product.getFeatured())
+      .nbInStock(product.getNumberInStock())
       .build();
   }
 

@@ -45,7 +45,7 @@ export class CreateProductsComponent {
   color: this.color,
   featured: this.featured,
   pictures:this.pictures,
-  nbInStock: this.stock
+  stock: this.stock
   });
 
   loading = false; // checks to understand if the creation is in progress
@@ -76,7 +76,7 @@ export class CreateProductsComponent {
       },
       featured: this.createForm.getRawValue().featured,
       pictures: this.productPictures,
-      nbInStock: this.createForm.getRawValue().nbInStock
+      nbInStock: this.createForm.getRawValue().stock
     };
     this.loading = true;
     this.createMutation.mutate(productToCreate);
