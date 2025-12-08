@@ -12,14 +12,22 @@
   <div class="navbar-center flex">
     <div class="menu menu-sm sm:menu-lg menu-horizontal px-1">
       <li><a href="/">Home</a></li>
-      <li>
+      @if (connectedUserQuery?.status() === 'success' && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!, 'ROLE_ADMIN')) {
+         <li>
         <details #productsMenu>
           <summary>Products</summary>
-          <ul class="z-30">
-            <li><a href="/products">Products</a></li>
+           <ul class="z-30">
+            <li>
+              <a routerLink="admin/products/list" (click)="closeMenu(productsMenu)" (clickOutside)="closeMenu(productsMenu)">Products</a>
+            </li>
+            <li>
+              <a routerLink="admin/products/list" (click)="closeMenu(productsMenu)" (clickOutside)="closeMenu(productsMenu)">Create</a>
+            </li>
           </ul>
         </details>
        </li>
+      }
+
        @if (connectedUserQuery?.status() === "success" && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!,"ROLE_ADMIN")) {
        <li>
         <details #adminMenu>
@@ -34,7 +42,6 @@
           </ul>
         </details>
        </li>
-
       }
 
        <li>

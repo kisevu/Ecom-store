@@ -23,7 +23,8 @@ export interface BaseProduct {
   size: ProductSizes,
   category: ProductCategory,
   pictures: ProductPicture[],
-  nbInStock: number
+  nbInStock: number,
+  featured: boolean,
 }
 
 export interface Product extends BaseProduct {
@@ -32,4 +33,17 @@ export interface Product extends BaseProduct {
 
 export type CreateCategoryFormContent = {
 name: FormControl<string>;
+}
+
+export type CreateProductFormContent = {
+  name: FormControl<string>;
+  description: FormControl<string>;
+  price: FormControl<number>;
+  size: FormControl<ProductSizes>;
+  category: FormControl<string>;
+  brand: FormControl<string>;
+  color: FormControl<string>;
+  featured: FormControl<boolean>;
+  pictures:FormControl<ProductPicture[]>;
+  nbInStock: FormControl<number>;
 }

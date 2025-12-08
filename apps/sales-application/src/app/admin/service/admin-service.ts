@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product, ProductCategory } from '../model/product.model';
+import { BaseProduct, Product, ProductCategory } from '../model/product.model';
 import { environment } from '../../../environments/environment';
 import { createPaginationOption, Page, Pagination } from '../../shared/model/request.model';
 
@@ -25,7 +25,7 @@ export class AdminService {
     return this.http.get<Page<ProductCategory>>(`${environment.apiUrl}/categories`);
   }
 
-  createProduct(product:Product):Observable<Product>{
+  createProduct(product:BaseProduct):Observable<Product>{
     const formData = new FormData();
 
     for( let i = 0; i < product.pictures.length; ++i){
