@@ -22,7 +22,8 @@ public class SecurityConfig {
      httpSecurity.authorizeHttpRequests( auth ->
         auth
           .requestMatchers(HttpMethod.GET,"api/categories").permitAll()
-          .requestMatchers(HttpMethod.GET, "/api/users/authenticated").permitAll()
+          .requestMatchers(HttpMethod.GET,"api/products-shop/**").permitAll()
+//          .requestMatchers(HttpMethod.GET, "/api/users/authenticated").permitAll()
           .requestMatchers("/api/**").authenticated())
       .csrf(AbstractHttpConfigurer::disable)
       .oauth2ResourceServer(oauth2 ->

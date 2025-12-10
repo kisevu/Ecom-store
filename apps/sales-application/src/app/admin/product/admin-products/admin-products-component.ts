@@ -64,6 +64,4 @@ export class AdminProductsComponent {
       this.toastService.show('Error failed to load products, please try again','ERROR');
     }
   }
-
-
 }

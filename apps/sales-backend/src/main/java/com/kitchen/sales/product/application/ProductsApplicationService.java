@@ -6,6 +6,7 @@ import com.kitchen.sales.product.domain.repository.CategoryRepository;
 import com.kitchen.sales.product.domain.repository.ProductRepository;
 import com.kitchen.sales.product.domain.service.CategoryService;
 import com.kitchen.sales.product.domain.service.ProductService;
+import com.kitchen.sales.product.domain.service.ProductShop;
 import com.kitchen.sales.product.domain.vo.PublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,11 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductsApplicationService {
   private CategoryService categoryService;
   private ProductService productService;
+  private ProductShop productShop;
 
   public ProductsApplicationService(CategoryRepository categoryRepository,
                                     ProductRepository productRepository) {
     this.categoryService = new CategoryService(categoryRepository);
     this.productService = new ProductService(productRepository);
+    this.productShop  = new ProductShop(productRepository);
   }
 
   @Transactional
@@ -54,6 +57,11 @@ public class ProductsApplicationService {
   @Transactional
   public PublicId deleteCategory(PublicId publicId){
     return categoryService.delete(publicId);
+  }
+
+  @Transactional(readOnly = true)
+  public Page<Product> getFeaturedProducts(Pageable pageable){
+    return productShop.getFeaturedProducts(pageable);
   }
 
 }

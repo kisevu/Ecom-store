@@ -1,5 +1,6 @@
 package com.kitchen.sales.product.infrastructure.secondary.repository;
 
+import com.kitchen.sales.order.infrastructure.secondary.repository.JpaUserRepository;
 import com.kitchen.sales.product.aggregate.Picture;
 import com.kitchen.sales.product.aggregate.Product;
 import com.kitchen.sales.product.domain.repository.ProductRepository;
@@ -25,13 +26,16 @@ public class SpringDataProductRepository implements ProductRepository {
   private final JpaProductRepository productRepository;
   private final JpaCategoryRepository categoryRepository;
   private final JpaProductPictureRepository pictureRepository;
+  private final JpaUserRepository jpaUserRepository;
 
   public SpringDataProductRepository(JpaProductRepository productRepository,
                                      JpaCategoryRepository categoryRepository,
-                                     JpaProductPictureRepository pictureRepository) {
+                                     JpaProductPictureRepository pictureRepository,
+                                     JpaUserRepository jpaUserRepository) {
     this.productRepository = productRepository;
     this.categoryRepository = categoryRepository;
     this.pictureRepository = pictureRepository;
+    this.jpaUserRepository = jpaUserRepository;
   }
 
   @Override
@@ -62,5 +66,10 @@ public class SpringDataProductRepository implements ProductRepository {
   @Override
   public int delete(PublicId publicId) {
     return productRepository.deleteByPublicId(publicId.value());
+  }
+
+  @Override
+  public Page<Product> findAllFeaturedProduct(Pageable pageable) {
+    return productRepository.findAllByFeaturedTrue(pageable).map(ProductEntity::to);
   }
 }

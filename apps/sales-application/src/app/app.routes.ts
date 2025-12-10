@@ -4,6 +4,7 @@ import { CreateCategoryComponent } from './admin/category/create-category/create
 import { roleCheckGuard } from './auth/auth/service/guard/role-check.guard';
 import { CreateProductsComponent } from './admin/product/create-products/create-products-component';
 import { AdminProductsComponent } from './admin/product/admin-products/admin-products-component';
+import { HomeComponent } from './home/home/home-component';
 
 
 
@@ -40,5 +41,9 @@ export const appRoutes: Route[] = [
     data: {
       authorities: ['ROLE_ADMIN']
     }
+  },
+  {
+    path: '',
+    component: HomeComponent
   }
 ];
