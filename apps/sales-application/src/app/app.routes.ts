@@ -5,6 +5,7 @@ import { roleCheckGuard } from './auth/auth/service/guard/role-check.guard';
 import { CreateProductsComponent } from './admin/product/create-products/create-products-component';
 import { AdminProductsComponent } from './admin/product/admin-products/admin-products-component';
 import { HomeComponent } from './home/home/home-component';
+import { ProductDetailsComponent } from './shop/product-details/product-details-component';
 
 
 
@@ -45,5 +46,9 @@ export const appRoutes: Route[] = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'product/:publicId',
+    component: ProductDetailsComponent
   }
 ];
