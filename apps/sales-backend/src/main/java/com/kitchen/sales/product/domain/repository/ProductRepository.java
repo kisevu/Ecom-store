@@ -1,11 +1,13 @@
 package com.kitchen.sales.product.domain.repository;
 
+import com.kitchen.sales.product.aggregate.FilterQuery;
 import com.kitchen.sales.product.aggregate.Product;
 import com.kitchen.sales.product.domain.vo.PublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Author: kev.Ameda
@@ -17,4 +19,5 @@ public interface ProductRepository {
   Page<Product> findAllFeaturedProduct(Pageable pageable);
   Optional<Product> findOne(PublicId publicId);
   Page<Product> findByCategoryExcludingOne(Pageable pageable, PublicId categoryPublicId, PublicId productPublicId);
+  Page<Product>  findByCategoryAndSize(Pageable pageable, FilterQuery filterQuery);
 }

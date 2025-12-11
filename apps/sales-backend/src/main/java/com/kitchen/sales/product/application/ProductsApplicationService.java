@@ -1,6 +1,7 @@
 package com.kitchen.sales.product.application;
 
 import com.kitchen.sales.product.aggregate.Category;
+import com.kitchen.sales.product.aggregate.FilterQuery;
 import com.kitchen.sales.product.aggregate.Product;
 import com.kitchen.sales.product.domain.repository.CategoryRepository;
 import com.kitchen.sales.product.domain.repository.ProductRepository;
@@ -74,6 +75,11 @@ public class ProductsApplicationService {
   @Transactional(readOnly = true)
   public Page<Product> findRelated(Pageable pageable, PublicId productPublicId){
     return productShop.findRelated(pageable, productPublicId);
+  }
+
+  @Transactional(readOnly = true)
+  public Page<Product> filter(Pageable pageable, FilterQuery query){
+    return productShop.filter(pageable,query);
   }
 
 }

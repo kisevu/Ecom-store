@@ -1,0 +1,9 @@
+<div class="grid grid-cols-[1fr_6fr] gap-5">
+  <div class="ms-5">
+    <ecom-products-filter-component
+    [sort]="sort()!"
+    [size]="size()!"
+    (productFilter)="onFilterChange($event)"
+    ></ecom-products-filter-component>
+  </div>
+</div>

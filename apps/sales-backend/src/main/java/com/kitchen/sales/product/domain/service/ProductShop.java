@@ -1,5 +1,6 @@
 package com.kitchen.sales.product.domain.service;
 
+import com.kitchen.sales.product.aggregate.FilterQuery;
 import com.kitchen.sales.product.aggregate.Product;
 import com.kitchen.sales.product.domain.repository.ProductRepository;
 import com.kitchen.sales.product.domain.vo.PublicId;
@@ -32,6 +33,10 @@ public class ProductShop {
     } else  {
       throw  new EntityNotFoundException(String.format("Not product found with product id : %s", productPublicId));
     }
+  }
+
+  public Page<Product> filter(Pageable pageable, FilterQuery query){
+    return productRepository.findByCategoryAndSize(pageable,query);
   }
 
 }

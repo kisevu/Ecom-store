@@ -1,6 +1,7 @@
 package com.kitchen.sales.product.infrastructure.secondary.repository;
 
 import com.kitchen.sales.order.infrastructure.secondary.repository.JpaUserRepository;
+import com.kitchen.sales.product.aggregate.FilterQuery;
 import com.kitchen.sales.product.aggregate.Picture;
 import com.kitchen.sales.product.aggregate.Product;
 import com.kitchen.sales.product.domain.repository.ProductRepository;
@@ -81,6 +82,15 @@ public class SpringDataProductRepository implements ProductRepository {
   @Override
   public Page<Product> findByCategoryExcludingOne(Pageable pageable, PublicId categoryPublicId, PublicId productPublicId) {
     return productRepository.findByCategoryPublicIdAndPublicIdNot(pageable,categoryPublicId.value(),productPublicId.value())
+      .map(ProductEntity::to);
+  }
+
+  @Override
+  public Page<Product> findByCategoryAndSize(Pageable pageable, FilterQuery filterQuery) {
+    return productRepository.findByCategoryPublicIdAndSizesIn(
+      pageable,
+      filterQuery.categoryPublicId().value(),
+      filterQuery.sizes())
       .map(ProductEntity::to);
   }
 }

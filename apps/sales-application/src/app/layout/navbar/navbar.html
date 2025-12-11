@@ -12,47 +12,43 @@
   <div class="navbar-center flex">
     <div class="menu menu-sm sm:menu-lg menu-horizontal px-1">
       <li><a href="/">Home</a></li>
-      @if (connectedUserQuery?.status() === 'success' && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!, 'ROLE_ADMIN')) {
-         <li>
+      <li>
         <details #productsMenu>
           <summary>Products</summary>
-           <ul class="z-30">
-            <li>
-              <a routerLink="admin/products/list" (click)="closeMenu(productsMenu)" (clickOutside)="closeMenu(productsMenu)">Products</a>
-            </li>
-            <li>
-              <a routerLink="admin/products/list" (click)="closeMenu(productsMenu)" (clickOutside)="closeMenu(productsMenu)">Create</a>
-            </li>
-          </ul>
-        </details>
-       </li>
-      }
-
-       @if (connectedUserQuery?.status() === "success" && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!,"ROLE_ADMIN")) {
-       <li>
-        <details #adminMenu>
-          <summary>Admin</summary>
           <ul class="z-30">
-            <li>
-              <a routerLink="admin/categories/list" (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Categories</a>
-            </li>
-            <li>
-              <a routerLink="admin/products/list" (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Products</a>
-            </li>
+            @if (categoryQuery.isSuccess() && categoryQuery.data()) {
+              @for (category of categoryQuery.data().content; track category.publicId) {
+                <li><a [routerLink]="['products']"
+                       [queryParams]="{category: category.publicId}"
+                       (click)="closeMenu(productsMenu)"
+                       (clickOutside)="closeMenu(productsMenu)">{{ category.name }}</a></li>
+              }
+            }
           </ul>
         </details>
-       </li>
+      </li>
+      @if (connectedUserQuery?.status() === "success"
+      && oauth2Service.hasAnyAuthorities(connectedUserQuery?.data()!, "ROLE_ADMIN")) {
+        <li>
+          <details #adminMenu>
+            <summary>Admin</summary>
+            <ul class="z-30">
+              <li>
+                <a routerLink="admin/categories/list"
+                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Categories</a>
+              </li>
+              <li>
+                <a routerLink="admin/products/list"
+                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Products</a>
+              </li>
+              <li>
+                <a routerLink="admin/orders/list"
+                   (click)="closeMenu(adminMenu)" (clickOutside)="closeMenu(adminMenu)">Orders</a>
+              </li>
+            </ul>
+          </details>
+        </li>
       }
-
-       <li>
-        <details #practice>
-          <summary>Practice</summary>
-          <ul class="z-20">
-            <li><a href="/practice">Practice</a></li>
-          </ul>
-        </details>
-       </li>
-
     </div>
   </div>
 
