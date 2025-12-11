@@ -8,10 +8,11 @@ import { ToastService } from '../../shared/toast/service/toast-service';
 import { Pagination } from '../../shared/model/request.model';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { filter, lastValueFrom } from 'rxjs';
+import { ProductCardComponent } from "../product-card/product-card-component";
 
 @Component({
   selector: 'ecom-products-component',
-  imports: [ProductsFilterComponent],
+  imports: [ProductsFilterComponent, ProductCardComponent],
   templateUrl: './products-component.html',
   styleUrl: './products-component.scss',
 })
@@ -41,6 +42,7 @@ export class ProductsComponent {
 
   constructor(){
     effect(()=> this.handleFilteredProductsQueryError());
+    effect(()=> this.handleParametersChange());
   }
 
   filteredProductsQuery = injectQuery(() => ({
