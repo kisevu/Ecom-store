@@ -9,6 +9,6 @@ import java.util.UUID;
  */
 public record PublicId( UUID value ) {
   public PublicId{
-    Assert.notNull("publicId",value);
+    Assert.notNull("productId",value);
   }
 }

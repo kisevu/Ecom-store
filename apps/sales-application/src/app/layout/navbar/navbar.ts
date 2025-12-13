@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { Oauth2Service } from '../../auth/auth/service/oauth/oauth2-service';
 import { UserProductService } from '../../shared/service/user-product/user-product-service';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
+import { CartService } from '../../shop/service/cart-service/cart-service';
 
 @Component({
   selector: 'ecom-navbar',
@@ -12,16 +13,29 @@ import { lastValueFrom } from 'rxjs';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar {
+export class Navbar  implements OnInit{
 
   oauth2Service  = inject(Oauth2Service);
   productService = inject(UserProductService);
+  cartService = inject(CartService);
+
+  nbItemsInCart = 0;
 
   connectedUserQuery = this.oauth2Service.connectedUserQuery;
   categoryQuery = injectQuery(()=>({
     queryKey:['categories'],
     queryFn: () => lastValueFrom(this.productService.findAllCategories())
   }));
+
+  ngOnInit(): void {
+    this.listenToCart();
+  }
+
+  private listenToCart(){
+    this.cartService.addedToCart.subscribe(productsInCart => {
+      this.nbItemsInCart = productsInCart.reduce((acc,product) => acc + product.quantity,0)
+    });
+  }
 
    login():void{
     this.closeDropDownMenu();

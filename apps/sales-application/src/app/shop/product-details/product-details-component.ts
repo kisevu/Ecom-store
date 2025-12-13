@@ -5,10 +5,12 @@ import { ToastService } from '../../shared/toast/service/toast-service';
 import { injectParams } from 'ngxtension/inject-params';
 import { Router } from '@angular/router';
 import { injectQuery } from '@tanstack/angular-query-experimental';
-import { lastValueFrom } from 'rxjs';
+import { interval, lastValueFrom, take } from 'rxjs';
 import { CurrencyPipe, NgStyle } from '@angular/common';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { ProductCardComponent } from '../product-card/product-card-component';
+import { CartService } from '../service/cart-service/cart-service';
+import { Product } from '../../admin/model/product.model';
 
 @Component({
   selector: 'ecom-product-details-component',
@@ -26,8 +28,12 @@ export class ProductDetailsComponent {
 
   toastService = inject(ToastService);
 
+  cartService = inject(CartService);
 
   lastPublicId = '';
+
+  labelAddToCart = 'Add to cart';
+  iconAddToCart = 'shopping-cart';
 
   pageRequest: Pagination = {
     page: 0,
@@ -74,7 +80,18 @@ export class ProductDetailsComponent {
     if(this.productQuery.isError()){
       this.toastService.show('Failed to load product, try again later','ERROR');
     }
+  }
 
+  addToCart(productToCart: Product){
+    this.cartService.addToCart(productToCart.publicId,'add');
+    this.labelAddToCart = 'Added to cart';
+    this.iconAddToCart = 'check';
+    interval(3000).pipe(
+      take(1)  // not three events but 1
+    ).subscribe(()=>{
+      this.labelAddToCart = 'Add to cart';
+      this.iconAddToCart = 'shopping-cart';
+    });
   }
 
 }

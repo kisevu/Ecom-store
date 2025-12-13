@@ -91,8 +91,8 @@ public final class AuthenticatedUser {
   private static Function<Authentication, Roles> toRoles() {
     return authentication ->
       new Roles(
-        authentication.
-          getAuthorities()
+        authentication
+          .getAuthorities()
           .stream()
           .map(GrantedAuthority::getAuthority)
           .map(Role::from).collect(Collectors.toSet()));

@@ -7,6 +7,6 @@ import com.kitchen.sales.config.error.domain.Assert;
  */
 public record CategoryName(String value) {
   public CategoryName{
-    Assert.field("publicId",value).notNull().minLength(3);
+    Assert.field("productId",value).notNull().minLength(3);
   }
 }

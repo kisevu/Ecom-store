@@ -23,8 +23,8 @@ public interface JpaUserRepository extends JpaRepository<UserEntity,Long> {
 //  @Query("UPDATE UserEntity user "+
 //  "set user.addressStreet=:street, user.addressCity=:city, user.addressCountry=:country "+
 //  " user.addressZipCode=:zipCode "+
-//  " WHERE user.publicId =: publicId")
-//  void updateAddress(UUID publicId,String street, String zipCode, String city, String country);
+//  " WHERE user.productId =: productId")
+//  void updateAddress(UUID productId,String street, String zipCode, String city, String country);
 
   @Modifying
   @Query("UPDATE UserEntity  user " +

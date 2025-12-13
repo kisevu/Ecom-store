@@ -9,8 +9,8 @@ import org.jilt.Builder;
 @Builder
 public record UserAddressToUpdate(UserPublicId userPublicId, UserAddress userAddress) {
   public UserAddressToUpdate {
-    Assert.notNull("publicId",userPublicId);
-    Assert.notNull("publicId",userAddress);
+    Assert.notNull("productId",userPublicId);
+    Assert.notNull("productId",userAddress);
   }
 
 }

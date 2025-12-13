@@ -8,7 +8,7 @@ import com.kitchen.sales.config.error.domain.Assert;
 public record UserFirstName(String value) {
 
   public UserFirstName {
-    Assert.field("publicId",value).maxLength(255);
+    Assert.field("productId",value).maxLength(255);
   }
 
 }

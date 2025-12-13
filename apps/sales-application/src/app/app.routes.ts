@@ -7,6 +7,7 @@ import { AdminProductsComponent } from './admin/product/admin-products/admin-pro
 import { HomeComponent } from './home/home/home-component';
 import { ProductDetailsComponent } from './shop/product-details/product-details-component';
 import { ProductsComponent } from './shop/products/products-component';
+import { CartComponent } from './shop/cart/cart-component';
 
 
 
@@ -55,5 +56,9 @@ export const appRoutes: Route[] = [
   {
     path: 'products',
     component:  ProductsComponent
+  },
+  {
+    path: 'cart',
+    component: CartComponent
   }
 ];

@@ -85,7 +85,10 @@
 
      <div class="dropdown dropdown-end me-2" routerLink="/cart">
     <div tabindex="0" role="button">
-      <fa-icon [icon]="['fas','cart-shopping']" class="menu-icon"> </fa-icon>
+      <div class="indicator">
+        <span class="indicator-item badge badge-primary">{{nbItemsInCart}}</span>
+         <fa-icon [icon]="['fas','cart-shopping']" class="menu-icon"> </fa-icon>
+      </div>
     </div>
     </div>
 

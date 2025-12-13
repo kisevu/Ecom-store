@@ -11,5 +11,5 @@ export const fontAwesomeIcons: IconDefinition []= [
   faWhatsapp,
   faXmark,
   faCheck,
-  faShoppingCart
+  faShoppingCart,
 ];

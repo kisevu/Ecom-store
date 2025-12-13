@@ -8,6 +8,6 @@ import com.kitchen.sales.config.error.domain.Assert;
 public record UserImageUrl(String value) {
 
   public UserImageUrl {
-    Assert.field("publicId",value).maxLength(1000);
+    Assert.field("productId",value).maxLength(1000);
   }
 }

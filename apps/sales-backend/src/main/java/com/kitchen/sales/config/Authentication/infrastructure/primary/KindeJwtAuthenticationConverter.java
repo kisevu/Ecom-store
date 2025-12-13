@@ -31,14 +31,15 @@ public class KindeJwtAuthenticationConverter implements Converter<Jwt, AbstractA
       Stream.concat(
         new JwtGrantedAuthoritiesConverter()
           .convert(source)
-          .stream(),extractResourceRoles(source).stream()
+          .stream(),
+        extractResourceRoles(source).stream()
       ).collect(Collectors.toSet()));
   }
 
   private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt){
     return AuthenticatedUser.extractRolesFromToken(jwt)
       .stream()
-      .map(SimpleGrantedAuthority::new)
+      .map(role -> new SimpleGrantedAuthority(role))
       .collect(Collectors.toSet());
   }
 

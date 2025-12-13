@@ -7,6 +7,6 @@ import com.kitchen.sales.config.error.domain.Assert;
  */
 public record ProductPrice( double value ) {
   public ProductPrice {
-    Assert.field("publicId", value).min(0.1);
+    Assert.field("productId", value).min(0.1);
   }
 }

@@ -47,7 +47,7 @@ public class StringTooLongException extends AssertionException{
     }
 
     private String message() {
-      return "The publicId \"%s\" in field \"%s\" must be at most %d long but was %d".formatted(value, field, maxLength, value.length());
+      return "The productId \"%s\" in field \"%s\" must be at most %d long but was %d".formatted(value, field, maxLength, value.length());
     }
 
     public StringTooLongException build() {

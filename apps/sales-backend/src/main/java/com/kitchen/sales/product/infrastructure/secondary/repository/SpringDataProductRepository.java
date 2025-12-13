@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Author: kev.Ameda
@@ -93,4 +94,14 @@ public class SpringDataProductRepository implements ProductRepository {
       filterQuery.sizes())
       .map(ProductEntity::to);
   }
+
+  @Override
+  public List<Product> findByPublicIds(List<PublicId> publicIds) {
+    List<UUID> publicIdsUUIDs = publicIds.stream().map(PublicId::value).toList();
+    return productRepository.findAllByPublicIdIn(publicIdsUUIDs)
+      .stream()
+      .map(ProductEntity::to)
+      .toList();
+  }
+
 }

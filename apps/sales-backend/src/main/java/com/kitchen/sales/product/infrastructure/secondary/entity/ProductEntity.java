@@ -47,7 +47,7 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
   @Column(name = "size")
   private ProductSize size;
 
-  @Column(name = "publicId", unique = true)
+  @Column(name = "public_id", unique = true)
   private UUID publicId;
 
   @Column(name = "nb_in_stock")
@@ -117,7 +117,6 @@ public class ProductEntity extends AbstractAuditingEntity<Long> {
       .featured(productEntity.getFeatured())
       .numberInStock(productEntity.getNbInStock())
       .build();
-
   }
 
   @Override
