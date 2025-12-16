@@ -1,26 +1,24 @@
-import { ProductPicture } from "../../admin/model/product.model"
+import { ProductPicture } from "../../admin/model/product.model";
 
 export interface CartItemAdd {
   publicId:string;
-  quantity:number;
+  quantity: number;
 }
-
 
 export interface Cart {
-  products: CartItem[];
+  restProductCarts: CartItem[];
 }
 
-
 export interface CartItem {
-name:string;
-price:number;
-brand:string;
-picture: ProductPicture;
-quantity:number;
-publicId: string;
+  name: string;
+  price: number;
+  brand: string;
+  picture: ProductPicture;
+  quantity: number;
+  publicId:string;
 }
 
 
 export interface StripeSession{
-  id:string;
+  id: string;
 }

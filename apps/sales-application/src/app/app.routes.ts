@@ -9,8 +9,6 @@ import { ProductDetailsComponent } from './shop/product-details/product-details-
 import { ProductsComponent } from './shop/products/products-component';
 import { CartComponent } from './shop/cart/cart-component';
 
-
-
 export const appRoutes: Route[] = [
 
   {

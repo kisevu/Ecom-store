@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 public record RestProductCart(String name,
                               double price,
-                              RestPicture restPicture,
+                              RestPicture picture,
                               int quantity,
                               UUID publicId,
                               String brand) {
@@ -23,7 +23,7 @@ public record RestProductCart(String name,
       .name(productCart.getName().value())
       .price(productCart.getPrice().value())
       .brand(productCart.getBrand().value())
-      .restPicture(RestPicture.fromDomain(productCart.getPicture()))
+      .picture(RestPicture.fromDomain(productCart.getPicture()))
       .publicId(productCart.getPublicId().value())
       .build();
   }

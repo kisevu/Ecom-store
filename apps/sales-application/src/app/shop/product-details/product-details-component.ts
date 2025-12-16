@@ -9,8 +9,8 @@ import { interval, lastValueFrom, take } from 'rxjs';
 import { CurrencyPipe, NgStyle } from '@angular/common';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { ProductCardComponent } from '../product-card/product-card-component';
-import { CartService } from '../service/cart-service/cart-service';
 import { Product } from '../../admin/model/product.model';
+import { CartService } from '../service/cart-service/cart-service';
 
 @Component({
   selector: 'ecom-product-details-component',
@@ -29,6 +29,8 @@ export class ProductDetailsComponent {
   toastService = inject(ToastService);
 
   cartService = inject(CartService);
+
+
 
   lastPublicId = '';
 
@@ -82,16 +84,17 @@ export class ProductDetailsComponent {
     }
   }
 
-  addToCart(productToCart: Product){
-    this.cartService.addToCart(productToCart.publicId,'add');
+  addToCart(productToAdd: Product):void{
+    this.cartService.addToCart(productToAdd.publicId,'add');
     this.labelAddToCart = 'Added to cart';
     this.iconAddToCart = 'check';
     interval(3000).pipe(
-      take(1)  // not three events but 1
-    ).subscribe(()=>{
+       take(1)
+    ).subscribe(() => {
       this.labelAddToCart = 'Add to cart';
       this.iconAddToCart = 'shopping-cart';
-    });
+    })
+
   }
 
 }

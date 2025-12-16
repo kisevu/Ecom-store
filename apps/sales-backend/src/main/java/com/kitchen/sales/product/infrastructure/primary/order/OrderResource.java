@@ -6,6 +6,8 @@ import com.kitchen.sales.order.domain.order.aggregate.DetailCartRequestBuilder;
 import com.kitchen.sales.order.domain.order.aggregate.DetailCartResponse;
 import com.kitchen.sales.order.application.OrdersApplicationService;
 import com.kitchen.sales.product.domain.vo.PublicId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,8 @@ public class OrderResource {
 
   private final OrdersApplicationService ordersApplicationService;
 
+  private final Logger log = LoggerFactory.getLogger(OrderResource.class);
+
   public OrderResource(OrdersApplicationService ordersApplicationService) {
     this.ordersApplicationService = ordersApplicationService;
   }
@@ -37,6 +41,8 @@ public class OrderResource {
       .items(cartItemRequests)
       .build();
     DetailCartResponse cartDetails = ordersApplicationService.getCartDetails(detailCartRequest);
+    RestDetailCartResponse restDetailCartResponse = RestDetailCartResponse.from(cartDetails);
+    log.info(" result : {}", restDetailCartResponse.restProductCarts().stream().map(RestProductCart::picture).toList());
     return ResponseEntity.ok(RestDetailCartResponse.from(cartDetails));
   }
 

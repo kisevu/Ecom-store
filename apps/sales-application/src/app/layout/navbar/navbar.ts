@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit} from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { Oauth2Service } from '../../auth/auth/service/oauth/oauth2-service';
@@ -13,11 +13,12 @@ import { CartService } from '../../shop/service/cart-service/cart-service';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar  implements OnInit{
+export class Navbar implements OnInit{
 
   oauth2Service  = inject(Oauth2Service);
   productService = inject(UserProductService);
   cartService = inject(CartService);
+
 
   nbItemsInCart = 0;
 
@@ -27,15 +28,6 @@ export class Navbar  implements OnInit{
     queryFn: () => lastValueFrom(this.productService.findAllCategories())
   }));
 
-  ngOnInit(): void {
-    this.listenToCart();
-  }
-
-  private listenToCart(){
-    this.cartService.addedToCart.subscribe(productsInCart => {
-      this.nbItemsInCart = productsInCart.reduce((acc,product) => acc + product.quantity,0)
-    });
-  }
 
    login():void{
     this.closeDropDownMenu();
@@ -61,6 +53,16 @@ export class Navbar  implements OnInit{
 
   closeMenu(menu: HTMLDetailsElement){
     menu.removeAttribute('open');
+  }
+
+   ngOnInit(): void {
+    this.listenToCart();
+  }
+
+  private listenToCart(): void {
+    this.cartService.addedToCart.subscribe( (productInCart) =>{
+      this.nbItemsInCart = productInCart.reduce((acc,product)=> acc + product.quantity,0);
+    });
   }
 
 }
