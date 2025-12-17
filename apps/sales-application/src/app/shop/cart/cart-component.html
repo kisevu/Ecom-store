@@ -2,7 +2,7 @@
 <div class="text-2xl mb-2">Shopping cart</div>
 <div class="flex flex-col lg:flex-row">
 <div class="flex-grow me-5 w-full">
-  <!-- @if (cartQuery.isSuccess() &&  this.cart.length !== 0) { -->
+  @if (cartQuery.isSuccess() &&  this.cart.length !== 0) {
     @for (item of cart; track item.publicId) {
       <div class="border-t border-gray-200"></div>
       <div class="flex items-center justify-between">
@@ -30,6 +30,34 @@
         </div>
       </div>
     }
-  <!-- } -->
+  } @else if(cartQuery.isPending()){
+    <div class="flex w-full justify-center">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+  } @else if(checkIfCartIsEmpty()){
+    <div class="flex flex-col items-center justify-center h-60">
+      <div class="font-bold text-2xl">No items in the cart</div>
+      <div>Add some items to the cart</div>
+    </div>
+  }
+</div>
+<div class="bg-gray-100 border-gray-400 p-5 w-full lg:w-96 h-72 mt-6 lg:mt-0 rounded-md">
+  <div class="font-bold">Order Summary</div>
+  <div class="border-t border-gray-300 my-5"></div>
+  <div class="flex justify-between">
+    <div>Delivery</div>
+    <div>{{0 | currency}}</div>
+  </div>
+  <div class="border-t border-gray-300 my-5"></div>
+  <div class="flex justify-between font-bold">
+    <div>Total</div>
+    <div>{{computeTotal() | currency}}</div>
+  </div>
+  <div class="border-t border-gray-300 my-5"></div>
+  <button class="btn btn-primary w-full"
+  [disabled]="cartQuery.isSuccess() && cartQuery.data()!.restProductCarts.length===0"
+  (click)="checkout()">
+  {{labelCheckout}}
+  </button>
 </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CartService } from '../service/cart-service/cart-service';
 import { Oauth2Service } from '../../auth/auth/service/oauth/oauth2-service';
 import { ToastService } from '../../shared/toast/service/toast-service';
@@ -6,7 +6,7 @@ import { CartItem, CartItemAdd } from '../../shared/model/cart.model';
 import { injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { RouterLink } from "@angular/router";
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'ecom-cart-component',
@@ -16,9 +16,12 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class CartComponent implements OnInit {
 
+
   cartService = inject(CartService);
   oauthService = inject(Oauth2Service);
   toastService = inject(ToastService);
+
+  platformId = inject(PLATFORM_ID);
 
   cart: Array<CartItem> = [];
 
@@ -96,6 +99,18 @@ export class CartComponent implements OnInit {
     return this.cart.reduce((acc,item) => acc + item.price * item.quantity,0);
   }
 
+  checkIfCartIsEmpty():boolean {
+    if(isPlatformBrowser(this.platformId)){
+      return this.cartQuery.isSuccess() && this.cartQuery.data().restProductCarts.length === 0;
+    } else {
+      return false;
+    }
+  }
+
+
+  checkout() {
+  throw new Error('Method not implemented.');
+  }
 
 
 }
