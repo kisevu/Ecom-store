@@ -10,4 +10,10 @@ public record StripeSessionId(String value, String url) {
     Assert.notNull("value",value);
     Assert.notNull("url",url);
   }
+
+  public StripeSessionId(String value) {
+    this(value, null);  // Default to null for legacy code
+  }
+
+
 }

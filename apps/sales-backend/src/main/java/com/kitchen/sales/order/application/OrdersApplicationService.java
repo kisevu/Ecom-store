@@ -1,13 +1,12 @@
 package com.kitchen.sales.order.application;
 
-import com.kitchen.sales.order.domain.order.aggregate.DetailCartItemRequest;
-import com.kitchen.sales.order.domain.order.aggregate.DetailCartRequest;
-import com.kitchen.sales.order.domain.order.aggregate.DetailCartResponse;
+import com.kitchen.sales.order.domain.order.aggregate.*;
 import com.kitchen.sales.order.domain.order.repository.OrderRepository;
 import com.kitchen.sales.order.domain.user.aggregate.User;
 import com.kitchen.sales.order.infrastructure.secondary.service.stripe.StripeService;
 import com.kitchen.sales.order.service.CartReader;
 import com.kitchen.sales.order.service.OrderCreator;
+import com.kitchen.sales.order.service.OrderUpdater;
 import com.kitchen.sales.order.vo.StripeSessionId;
 import com.kitchen.sales.product.aggregate.Product;
 import com.kitchen.sales.product.application.ProductsApplicationService;
@@ -27,6 +26,7 @@ public class OrdersApplicationService {
   private final CartReader cartReader;
   private final UserApplicationService userApplicationService;
   private OrderCreator orderCreator;
+  private final OrderUpdater orderUpdater;
 
 
   public OrdersApplicationService(ProductsApplicationService productsApplicationService,
@@ -37,6 +37,7 @@ public class OrdersApplicationService {
     this.userApplicationService = userApplicationService;
     this.orderCreator = new OrderCreator(orderRepository,stripeService);
     this.cartReader = new CartReader();
+    this.orderUpdater = new OrderUpdater(orderRepository);
   }
 
   @Transactional(readOnly = true)
@@ -55,6 +56,14 @@ public class OrdersApplicationService {
     List<PublicId> publicIds = items.stream().map(DetailCartItemRequest::productId).toList();
     List<Product> productInfos = productsApplicationService.getProductByPublicIdIn(publicIds);
     return orderCreator.create(productInfos, items, authenticatedUser);
+  }
+
+  @Transactional
+  public void updateOrder(StripeSessionInformation stripeSessionInformation){
+    List<OrderedProduct> orderedProducts = this.orderUpdater.updateOrderFromStripe(stripeSessionInformation);
+    List<OrderProductQuantity> orderProductQuantities = this.orderUpdater.computeQuantity(orderedProducts);
+    this.productsApplicationService.updateProductQuantity(orderProductQuantities);
+    this.userApplicationService.updateAddress(stripeSessionInformation.userAddressToUpdate());
   }
 
 }

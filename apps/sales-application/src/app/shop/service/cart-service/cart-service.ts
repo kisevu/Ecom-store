@@ -10,7 +10,6 @@ import { environment } from '../../../../environments/environment';
 })
 export class CartService {
 
-
  platformId = inject(PLATFORM_ID);
  http = inject(HttpClient);
 
@@ -119,6 +118,13 @@ export class CartService {
   deleteSessionId(): void {
     if(isPlatformBrowser(this.platformId)){
       localStorage.removeItem(this.keySessionId);
+    }
+  }
+
+  clearCart() {
+    if(isPlatformBrowser(this.platformId)){
+      localStorage.removeItem(this.keyStorage);
+      this.addedToCart$.next([]);
     }
   }
 

@@ -1,9 +1,14 @@
 package com.kitchen.sales.order.infrastructure.secondary.repository;
 
 import com.kitchen.sales.order.domain.order.aggregate.Order;
+import com.kitchen.sales.order.domain.order.aggregate.StripeSessionInformation;
 import com.kitchen.sales.order.domain.order.repository.OrderRepository;
 import com.kitchen.sales.order.infrastructure.secondary.entity.OrderEntity;
+import com.kitchen.sales.order.vo.OrderStatus;
+import com.kitchen.sales.product.domain.vo.PublicId;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * Author: kev.Ameda
@@ -29,5 +34,14 @@ public class SpringDataOrderRepository implements OrderRepository {
     orderProductRepository.saveAll(savedOrderEntity.getOrderedProducts());
   }
 
+  @Override
+  public void updateStatusByPublicId(OrderStatus orderStatus, PublicId orderPublicId) {
+    jpaOrderRepository.updateStatusByPublicId(orderStatus,orderPublicId.value());
+  }
 
+  @Override
+  public Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation) {
+    return jpaOrderRepository.findByStripeSessionId(stripeSessionInformation.stripeSessionId().value())
+      .map(OrderEntity::toDomain);
+  }
 }

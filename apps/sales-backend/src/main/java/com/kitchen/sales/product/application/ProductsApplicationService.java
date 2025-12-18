@@ -1,5 +1,6 @@
 package com.kitchen.sales.product.application;
 
+import com.kitchen.sales.order.domain.order.aggregate.OrderProductQuantity;
 import com.kitchen.sales.product.aggregate.Category;
 import com.kitchen.sales.product.aggregate.FilterQuery;
 import com.kitchen.sales.product.aggregate.Product;
@@ -8,6 +9,7 @@ import com.kitchen.sales.product.domain.repository.ProductRepository;
 import com.kitchen.sales.product.domain.service.CategoryService;
 import com.kitchen.sales.product.domain.service.ProductService;
 import com.kitchen.sales.product.domain.service.ProductShop;
+import com.kitchen.sales.product.domain.service.ProductUpdater;
 import com.kitchen.sales.product.domain.vo.PublicId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,12 +27,14 @@ public class ProductsApplicationService {
   private CategoryService categoryService;
   private ProductService productService;
   private ProductShop productShop;
+  private ProductUpdater productUpdater;
 
   public ProductsApplicationService(CategoryRepository categoryRepository,
                                     ProductRepository productRepository) {
     this.categoryService = new CategoryService(categoryRepository);
     this.productService = new ProductService(productRepository);
     this.productShop  = new ProductShop(productRepository);
+    this.productUpdater = new ProductUpdater(productRepository);
   }
 
   @Transactional
@@ -87,4 +91,11 @@ public class ProductsApplicationService {
   public List<Product> getProductByPublicIdIn(List<PublicId> publicIds){
     return productService.findAllByPublicIdIn(publicIds);
   }
+
+  @Transactional
+  public void updateProductQuantity(List<OrderProductQuantity> orderProductQuantities){
+    productUpdater.updateQuantity(orderProductQuantities);
+  }
+
+
 }

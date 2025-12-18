@@ -1,19 +1,25 @@
 package com.kitchen.sales.product.infrastructure.primary.order;
 
-import com.kitchen.sales.order.domain.order.aggregate.DetailCartItemRequest;
-import com.kitchen.sales.order.domain.order.aggregate.DetailCartRequest;
-import com.kitchen.sales.order.domain.order.aggregate.DetailCartRequestBuilder;
-import com.kitchen.sales.order.domain.order.aggregate.DetailCartResponse;
+import com.kitchen.sales.order.domain.order.aggregate.*;
 import com.kitchen.sales.order.application.OrdersApplicationService;
 import com.kitchen.sales.order.domain.order.exceptions.CartPaymentException;
+import com.kitchen.sales.order.domain.user.vo.*;
 import com.kitchen.sales.order.vo.StripeSessionId;
 import com.kitchen.sales.product.domain.vo.PublicId;
+import com.stripe.exception.SignatureVerificationException;
+import com.stripe.model.Address;
+import com.stripe.model.Event;
+import com.stripe.model.StripeObject;
+import com.stripe.model.checkout.Session;
+import com.stripe.net.Webhook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -24,6 +30,9 @@ import java.util.UUID;
 public class OrderResource {
 
   private final OrdersApplicationService ordersApplicationService;
+
+  @Value("${application.stripe.webhook-secret}")
+  private String webhookSecret;
 
   private final Logger log = LoggerFactory.getLogger(OrderResource.class);
 
@@ -55,6 +64,47 @@ public class OrderResource {
     }catch (CartPaymentException ex){
       log.error("Error occurred with stripe thing: {}",ex.getMessage());
       return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @PostMapping("/webhook")
+  public ResponseEntity<Void> webhookStripe(@RequestBody String paymentEvent,
+                                            @RequestHeader("Stripe-Signature") String stripeSignature){
+    Event event = null;
+    try{
+      event = Webhook.constructEvent( paymentEvent, stripeSignature, webhookSecret);
+    }catch (SignatureVerificationException ex){
+      return ResponseEntity.badRequest().build();
+    }
+    Optional<StripeObject> rawPaymentIntent = event.getDataObjectDeserializer().getObject();
+    switch (event.getType()){
+      case "checkout.session.completed":
+        handleCheckoutSessionCompleted(rawPaymentIntent.orElseThrow());
+        break;
+    }
+    return ResponseEntity.ok().build();
+  }
+
+  private void handleCheckoutSessionCompleted(StripeObject rawStripeObject) {
+    if (rawStripeObject instanceof Session session){
+      Address address = session.getCustomerDetails().getAddress();
+      UserAddress userAddress = UserAddressBuilder.userAddress()
+        .city(address.getCity())
+        .country(address.getCountry())
+        .zipcode(address.getPostalCode())
+        .street(address.getLine1())
+        .build();
+
+      UserAddressToUpdate userAddressToUpdate = UserAddressToUpdateBuilder.userAddressToUpdate()
+        .userAddress(userAddress)
+        .userPublicId(new UserPublicId(UUID.fromString(session.getMetadata().get("user_public_id"))))
+        .build();
+
+      StripeSessionInformation stripeSessionInformation = StripeSessionInformationBuilder.stripeSessionInformation()
+        .userAddressToUpdate(userAddressToUpdate)
+        .stripeSessionId(new StripeSessionId(session.getId()))
+        .build();
+      ordersApplicationService.updateOrder(stripeSessionInformation);
     }
   }
 

@@ -1,5 +1,6 @@
 package com.kitchen.sales.product.domain.repository;
 
+import com.kitchen.sales.order.vo.ProductPublicId;
 import com.kitchen.sales.product.aggregate.FilterQuery;
 import com.kitchen.sales.product.aggregate.Product;
 import com.kitchen.sales.product.domain.vo.PublicId;
@@ -22,5 +23,5 @@ public interface ProductRepository {
   Page<Product> findByCategoryExcludingOne(Pageable pageable, PublicId categoryPublicId, PublicId productPublicId);
   Page<Product>  findByCategoryAndSize(Pageable pageable, FilterQuery filterQuery);
   List<Product> findByPublicIds(List<PublicId> publicIds);
-
+  void updateQuantity(ProductPublicId productPublicId, long quantity);
 }
