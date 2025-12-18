@@ -2,8 +2,8 @@ import { Component, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CartService } from '../service/cart-service/cart-service';
 import { Oauth2Service } from '../../auth/auth/service/oauth/oauth2-service';
 import { ToastService } from '../../shared/toast/service/toast-service';
-import { CartItem, CartItemAdd } from '../../shared/model/cart.model';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import { CartItem, CartItemAdd, StripeSession } from '../../shared/model/cart.model';
+import { injectMutation, injectQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom } from 'rxjs';
 import { RouterLink } from "@angular/router";
 import { CurrencyPipe, isPlatformBrowser } from '@angular/common';
@@ -23,16 +23,28 @@ export class CartComponent implements OnInit {
 
   platformId = inject(PLATFORM_ID);
 
+
   cart: Array<CartItem> = [];
 
   labelCheckout = 'Login to checkout';
   action: 'login'| 'checkout' = 'login';
+
+  isInitPaymentSessionLoading = false;
 
   cartQuery = injectQuery(() => ({
     queryKey: ['cart'],
     queryFn: () => lastValueFrom(this.cartService.getCartDetail())
   }));
 
+  initPaymentSession = injectMutation(()=> ({
+    mutationFn: (cart:Array<CartItemAdd>) => lastValueFrom(this.cartService.initPayment(cart)),
+    onSuccess: (result:StripeSession) => this.onSessionCreateSuccess(result),
+    onError: (error) => {
+    console.error('Payment init failed:', error);
+    this.isInitPaymentSessionLoading = false;
+    this.toastService.show('Checkout failed. Please try again.', 'ERROR');
+  }
+  }));
   constructor(){
     this.extractListToUpdate();
     this.checkUserLoggedIn();
@@ -47,7 +59,8 @@ export class CartComponent implements OnInit {
   }
 
   private checkUserLoggedIn(){
-    const connectedUserQuery =  this.oauthService.connectedUserQuery;
+   effect(()=>{
+     const connectedUserQuery =  this.oauthService.connectedUserQuery;
     if(connectedUserQuery?.isError()){
       this.labelCheckout = 'Login to checkout';
       this.action = 'login';
@@ -55,6 +68,7 @@ export class CartComponent implements OnInit {
       this.labelCheckout = 'checkout';
       this.action = 'checkout';
     }
+   });
   }
 
 
@@ -109,8 +123,23 @@ export class CartComponent implements OnInit {
 
 
   checkout() {
-  throw new Error('Method not implemented.');
+    if(this.action === 'login'){
+      this.oauthService.login();
+    } else if(this.action === 'checkout'){
+      this.isInitPaymentSessionLoading = true;
+      const cartItemsAdd = this.cart.map(item => ({publicId:item.publicId,quantity:item.quantity}) as CartItemAdd);
+      this.initPaymentSession.mutate(cartItemsAdd);
+    }
   }
 
+  private onSessionCreateSuccess(stripeSession: StripeSession): void {
+    this.cartService.storeSessionId(stripeSession.id);
+    this.isInitPaymentSessionLoading = false;
+    if(isPlatformBrowser(this.platformId) && stripeSession.url){
+      window.location.href = stripeSession.url;
+    }else {
+      this.toastService.show(`Order error `,'ERROR');
+    }
+  }
 
 }

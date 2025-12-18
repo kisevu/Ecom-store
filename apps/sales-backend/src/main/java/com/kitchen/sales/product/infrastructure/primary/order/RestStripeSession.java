@@ -7,11 +7,12 @@ import org.jilt.Builder;
  * Author: kev.Ameda
  */
 @Builder
-public record RestStripeSession(String id) {
+public record RestStripeSession(String id, String url) {
 
   public static RestStripeSession from(StripeSessionId stripeSessionId){
     return RestStripeSessionBuilder.restStripeSession()
       .id(stripeSessionId.value())
+      .url(stripeSessionId.url())
       .build();
   }
 }

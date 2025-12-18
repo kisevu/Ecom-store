@@ -72,7 +72,7 @@ public class StripeService {
   private StripeSessionId createSession(SessionCreateParams sessionCreateParams) {
     try{
       Session session = Session.create(sessionCreateParams);
-      return new StripeSessionId(session.getId());
+      return new StripeSessionId(session.getId(),session.getUrl());
     }catch (StripeException stripeException){
       throw new CartPaymentException(String.format("Error while creating Stripe Session %s: ", stripeException.getMessage()));
     }

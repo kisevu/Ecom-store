@@ -53,6 +53,7 @@ public class OrderResource {
       RestStripeSession restStripeSession = RestStripeSession.from(stripeSessionInformation);
       return ResponseEntity.ok(restStripeSession);
     }catch (CartPaymentException ex){
+      log.error("Error occurred with stripe thing: {}",ex.getMessage());
       return ResponseEntity.badRequest().build();
     }
   }
