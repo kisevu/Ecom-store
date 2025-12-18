@@ -5,14 +5,13 @@ import com.kitchen.sales.order.domain.order.aggregate.DetailCartRequest;
 import com.kitchen.sales.order.domain.order.aggregate.DetailCartRequestBuilder;
 import com.kitchen.sales.order.domain.order.aggregate.DetailCartResponse;
 import com.kitchen.sales.order.application.OrdersApplicationService;
+import com.kitchen.sales.order.domain.order.exceptions.CartPaymentException;
+import com.kitchen.sales.order.vo.StripeSessionId;
 import com.kitchen.sales.product.domain.vo.PublicId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -45,5 +44,18 @@ public class OrderResource {
     log.info(" result : {}", restDetailCartResponse.restProductCarts().stream().map(RestProductCart::picture).toList());
     return ResponseEntity.ok(RestDetailCartResponse.from(cartDetails));
   }
+
+  @PostMapping("/init-payment")
+  public ResponseEntity<RestStripeSession> initPayment(@RequestBody List<RestCartItemRequest> items){
+    List<DetailCartItemRequest> detailCartItemRequests = RestCartItemRequest.to(items);
+    try{
+      StripeSessionId stripeSessionInformation = ordersApplicationService.createOrder(detailCartItemRequests);
+      RestStripeSession restStripeSession = RestStripeSession.from(stripeSessionInformation);
+      return ResponseEntity.ok(restStripeSession);
+    }catch (CartPaymentException ex){
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
 
 }

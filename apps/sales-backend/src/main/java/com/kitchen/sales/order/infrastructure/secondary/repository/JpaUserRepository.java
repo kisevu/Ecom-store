@@ -18,13 +18,6 @@ public interface JpaUserRepository extends JpaRepository<UserEntity,Long> {
   Optional<UserEntity> findByEmail(String email);
   List<UserEntity> findByPublicIdIn(List<UUID> publicIds);
   Optional<UserEntity> findOneByPublicId(UUID publicId);
-//
-//  @Modifying
-//  @Query("UPDATE UserEntity user "+
-//  "set user.addressStreet=:street, user.addressCity=:city, user.addressCountry=:country "+
-//  " user.addressZipCode=:zipCode "+
-//  " WHERE user.productId =: productId")
-//  void updateAddress(UUID productId,String street, String zipCode, String city, String country);
 
   @Modifying
   @Query("UPDATE UserEntity  user " +

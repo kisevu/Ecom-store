@@ -34,13 +34,13 @@ public class UserApplicationService {
   public User getAuthenticatedUserWithSync(Jwt jwtToken ,boolean forceSync){
     userSynchronizer.syncWithIdp(jwtToken,forceSync);
     return userReader.getByEmail(new UserEmail(AuthenticatedUser.username().get()))
-      .orElseGet(()-> new User());
+      .orElseGet(User::new);
   }
 
   @Transactional(readOnly = true)
-  public User getAuthenticatedUser(Jwt jwtToken ,boolean forceSync){
+  public User getAuthenticatedUser(){
     return userReader.getByEmail(new UserEmail(AuthenticatedUser.username().get()))
-      .orElseGet(()-> new User());
+      .orElseGet(User::new);
   }
 
   @Transactional
