@@ -15,6 +15,9 @@ import com.stripe.net.Webhook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -106,6 +109,29 @@ public class OrderResource {
         .build();
       ordersApplicationService.updateOrder(stripeSessionInformation);
     }
+  }
+
+  @GetMapping("/user")
+  public ResponseEntity<Page<RestOrderRead>> getOrdersForConnectedUser(Pageable pageable){
+    Page<Order> ordersForConnectedUser = ordersApplicationService.findOrdersForConnectedUser(pageable);
+    PageImpl<RestOrderRead> restOrderReads = new PageImpl<>(
+      ordersForConnectedUser.getContent().stream().map(RestOrderRead::from).toList(),
+      pageable,
+      ordersForConnectedUser.getTotalElements()
+    );
+    return ResponseEntity.ok(restOrderReads);
+  }
+
+
+  @GetMapping("/admin")
+  public ResponseEntity<Page<RestOrderReadAdmin>> getOrdersForAdmin(Pageable pageable){
+    Page<Order> orders = ordersApplicationService.findOrdersForAdmin(pageable);
+    PageImpl<RestOrderReadAdmin> restOrderReadAdmins = new PageImpl<>(
+      orders.getContent().stream().map(RestOrderReadAdmin::from).toList(),
+      pageable,
+      orders.getTotalElements()
+    );
+    return ResponseEntity.ok(restOrderReadAdmins);
   }
 
 

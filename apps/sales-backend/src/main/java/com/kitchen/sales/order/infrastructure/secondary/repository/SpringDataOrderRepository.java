@@ -3,9 +3,12 @@ package com.kitchen.sales.order.infrastructure.secondary.repository;
 import com.kitchen.sales.order.domain.order.aggregate.Order;
 import com.kitchen.sales.order.domain.order.aggregate.StripeSessionInformation;
 import com.kitchen.sales.order.domain.order.repository.OrderRepository;
+import com.kitchen.sales.order.domain.user.vo.UserPublicId;
 import com.kitchen.sales.order.infrastructure.secondary.entity.OrderEntity;
 import com.kitchen.sales.order.vo.OrderStatus;
 import com.kitchen.sales.product.domain.vo.PublicId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -43,5 +46,16 @@ public class SpringDataOrderRepository implements OrderRepository {
   public Optional<Order> findByStripeSessionId(StripeSessionInformation stripeSessionInformation) {
     return jpaOrderRepository.findByStripeSessionId(stripeSessionInformation.stripeSessionId().value())
       .map(OrderEntity::toDomain);
+  }
+
+  @Override
+  public Page<Order> findAllByUserPublicId(UserPublicId userPublicId, Pageable pageable) {
+    return jpaOrderRepository.findAllByUserPublicId(userPublicId.value(),pageable)
+      .map(OrderEntity::toDomain);
+  }
+
+  @Override
+  public Page<Order> findAll(Pageable pageable) {
+    return jpaOrderRepository.findAll(pageable).map(OrderEntity::toDomain);
   }
 }

@@ -11,19 +11,18 @@ import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 })
 export class CartSuccessComponent {
 
-  sessionId = injectQueryParams('session_id');
+  sessionId = injectQueryParams('session_id');  // injected by stripe
 
   cartService = inject(CartService);
 
   isValidAccess = true;
 
   constructor(){
-    // afterNextRender(()=> this.verifySession());
-    effect(()=>{
-      this.verifySession()
-    });
+    afterNextRender(()=> this.verifySession());
   }
 
+
+  // makes sure the user has a valid session
   verifySession():void {
     const sessionIdLocalStorage = this.cartService.getSessionId();
     if(sessionIdLocalStorage !== this.sessionId()){
