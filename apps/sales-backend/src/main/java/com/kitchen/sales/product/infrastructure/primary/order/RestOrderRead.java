@@ -11,14 +11,14 @@ import java.util.UUID;
  */
 @Builder
 public record RestOrderRead(UUID publicId,
-                            OrderStatus orderStatus,
+                            OrderStatus status,
                             List<RestOrderedItemRead> orderedItems) {
 
 
   public static RestOrderRead from(Order order){
     return RestOrderReadBuilder.restOrderRead()
       .publicId(order.getPublicId().value())
-      .orderStatus(order.getStatus())
+      .status(order.getStatus())
       .orderedItems(RestOrderedItemRead.from(order.getOrderedProducts()))
       .build();
   }

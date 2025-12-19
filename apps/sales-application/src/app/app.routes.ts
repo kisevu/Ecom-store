@@ -9,6 +9,7 @@ import { ProductDetailsComponent } from './shop/product-details/product-details-
 import { ProductsComponent } from './shop/products/products-component';
 import { CartComponent } from './shop/cart/cart-component';
 import { CartSuccessComponent } from './shop/cart-success/cart-success-component';
+import { UserOrderComponent } from './user/user-order-component';
 
 export const appRoutes: Route[] = [
 
@@ -63,5 +64,9 @@ export const appRoutes: Route[] = [
   {
     path: 'cart/success',
     component: CartSuccessComponent
+  },
+  {
+    path: 'users/orders',
+    component: UserOrderComponent
   }
 ];
